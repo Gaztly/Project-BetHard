@@ -12,5 +12,6 @@ namespace Project_BetHard.Models
         public int Age { get; set; }
         public string Password { get; set; }
         public Wallet Wallet { get; set; }
+        public List <Bet> Bets { get; set; }
     }
 }
