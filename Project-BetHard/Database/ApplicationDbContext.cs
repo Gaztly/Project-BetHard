@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 namespace Project_BetHard.Database
 {
     public class ApplicationDbContext : DbContext
-     {
+    {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
         }
 
         public DbSet<Bet> Bets { get; set; }
