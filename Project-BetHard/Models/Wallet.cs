@@ -8,6 +8,6 @@ namespace Project_BetHard.Models
     public class Wallet
     {
         public int Id { get; set; }
-        public int Balance { get; set; }
+        public int Balance { get; set; } = 1000;
     }
 }

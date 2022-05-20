@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_BetHard.Database;
 
 namespace Project_BetHard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220520143321_walletAddedInitialBalance")]
+    partial class walletAddedInitialBalance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,9 +80,7 @@ namespace Project_BetHard.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WalletId")
-                        .IsUnique()
-                        .HasFilter("[WalletId] IS NOT NULL");
+                    b.HasIndex("WalletId");
 
                     b.ToTable("Users");
                 });
@@ -112,8 +112,8 @@ namespace Project_BetHard.Migrations
             modelBuilder.Entity("Project_BetHard.Models.User", b =>
                 {
                     b.HasOne("Project_BetHard.Models.Wallet", "Wallet")
-                        .WithOne("AssignedTo")
-                        .HasForeignKey("Project_BetHard.Models.User", "WalletId");
+                        .WithMany()
+                        .HasForeignKey("WalletId");
 
                     b.Navigation("Wallet");
                 });
@@ -121,11 +121,6 @@ namespace Project_BetHard.Migrations
             modelBuilder.Entity("Project_BetHard.Models.User", b =>
                 {
                     b.Navigation("Bets");
-                });
-
-            modelBuilder.Entity("Project_BetHard.Models.Wallet", b =>
-                {
-                    b.Navigation("AssignedTo");
                 });
 #pragma warning restore 612, 618
         }
