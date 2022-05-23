@@ -1,9 +1,12 @@
-function Header () {
-return(
-    <div>
-<header>hELLO</header>
-</div>
-);
+import Navbar from "../navbar/Navbar";
+
+function Header() {
+  return (
+    <>
+      <Navbar />
+      <header>hELLO</header>
+    </>
+  );
 }
 
 export default Header;
