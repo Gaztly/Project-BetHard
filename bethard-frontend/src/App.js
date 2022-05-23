@@ -10,22 +10,22 @@ import Navbar from "./components/navbar/Navbar";
 import UserContext from "./context/userContext";
 
 function App() {
-  return (
-    <>    
-    <UserContext.Provider value={""}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
-        <Footer />
-     </UserContext.Provider>
-            
-    </>
-  );
+    return (
+        <>
+            <UserContext.Provider value={""}>
+                <Router>
+                    <Header />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Router>
+                <Footer />
+            </UserContext.Provider>
+        </>
+    );
+}
 
 export default App;
