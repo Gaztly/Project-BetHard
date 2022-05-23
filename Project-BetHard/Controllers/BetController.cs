@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Project_BetHard.Database;
 using Project_BetHard.Models;
 
+
 namespace Project_BetHard.Controllers
 {
     [Route("api/[controller]")]
@@ -15,6 +16,8 @@ namespace Project_BetHard.Controllers
     public class BetController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+
+    
 
         public BetController(ApplicationDbContext context)
         {
@@ -46,12 +49,38 @@ namespace Project_BetHard.Controllers
         // POST: api/Bet
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Bet>> PostBet(Bet bet)
+        public async Task<ActionResult<Bet>> PostBet([FromBody]BetInput input) 
         {
-            _context.Bets.Add(bet);
+
+            //_context.Bets.Add(bet);
+            //Få in ett bet och lägga till den i DB
+            if (!ModelState.IsValid || input == null) return BadRequest("Invalid fields");
+
+            //if (await _context.Bets.AnyAsync(x => x.Id == bet.Id)) return Conflict("Bet already made");
+
+
+
+
+            var bet = input.Bet;
+            var user = await _context.Users.Include(u => u.Wallet).FirstAsync(x => x.Id == input.UserId);
+            bet.User = user;
+
+            var wallet = user.Wallet;
+            if (wallet.Balance < input.Bet.BetAmount) return BadRequest("Insufficent funds");
+            wallet.Balance -=  input.Bet.BetAmount;
+          
+           
+            
+
+            await _context.Bets.AddAsync(bet);
+            _context.Wallets.Update(wallet);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBet", new { id = bet.Id }, bet);
+
+            bet.User.Password = "";
+            return Ok(bet);
+
+            
         }
 
         // PUT: api/Bet/5
