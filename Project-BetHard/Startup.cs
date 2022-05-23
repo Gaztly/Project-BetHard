@@ -25,6 +25,8 @@ namespace Project_BetHard
 
         public IConfiguration Configuration { get; }
 
+        private string allowSpecificOrigins = "_allowSpecificOrigins";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -32,6 +34,16 @@ namespace Project_BetHard
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project_BetHard", Version = "v1" });
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: allowSpecificOrigins,
+                    policy =>
+                    {
+                        policy.WithOrigins("*");
+                        policy.WithHeaders("*");
+                    });
             });
 
             services.AddControllers();
@@ -51,6 +63,8 @@ namespace Project_BetHard
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(allowSpecificOrigins);
 
             app.UseAuthorization();
 
