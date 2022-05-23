@@ -4,10 +4,11 @@ import Home from "./components/views/Home";
 import Login from "./components/views/Login";
 import NotFound from "./components/views/NotFound";
 import Register from "./components/views/Register";
+import Footer from "./components/footer/Footer";
 
 function App() {
     return (
-        <Router>
+       <> <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
@@ -15,6 +16,7 @@ function App() {
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
+        <Footer/></>
     );
 }
 
