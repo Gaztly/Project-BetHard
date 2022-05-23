@@ -13,7 +13,7 @@ namespace Project_BetHard.Models
         public DateTime TimePlaced { get; set; } = DateTime.Now;
         public bool PaidOut { get; set; } = false;
 
-        [Required]
+        
         [ForeignKey("UserId")]
         public User User { get; set; }
 

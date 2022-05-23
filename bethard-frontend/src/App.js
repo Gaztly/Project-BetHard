@@ -7,22 +7,25 @@ import Register from "./components/views/Register";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import Navbar from "./components/navbar/Navbar";
+import UserContext from "./context/userContext";
 
 function App() {
   return (
-    <>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-      <Footer />
+    <>    
+    <UserContext.Provider value={""}>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+        <Footer />
+     </UserContext.Provider>
+            
     </>
   );
-}
 
 export default App;

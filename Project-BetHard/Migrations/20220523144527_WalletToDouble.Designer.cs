@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_BetHard.Database;
 
 namespace Project_BetHard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220523144527_WalletToDouble")]
+    partial class WalletToDouble
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +103,7 @@ namespace Project_BetHard.Migrations
             modelBuilder.Entity("Project_BetHard.Models.Bet", b =>
                 {
                     b.HasOne("Project_BetHard.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Bets")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -114,6 +116,11 @@ namespace Project_BetHard.Migrations
                         .HasForeignKey("WalletId");
 
                     b.Navigation("Wallet");
+                });
+
+            modelBuilder.Entity("Project_BetHard.Models.User", b =>
+                {
+                    b.Navigation("Bets");
                 });
 #pragma warning restore 612, 618
         }

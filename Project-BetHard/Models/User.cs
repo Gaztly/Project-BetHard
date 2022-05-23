@@ -28,6 +28,6 @@ namespace Project_BetHard.Models
         [ForeignKey("WalletId")]
         public Wallet Wallet { get; set; }
 
-        public List<Bet> Bets { get; set; }
+       
     }
 }

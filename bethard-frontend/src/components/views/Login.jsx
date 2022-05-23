@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import login from "../../api/services/login-service";
+import UserContext from "../../context/userContext";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const submit = () => {
-        login(username, password);
+    var context = useContext(UserContext);
+
+    const submit = async (context) => {
+        const userObject = await login(username, password);
+        context = userObject.data;
     };
 
     return (
@@ -25,7 +29,7 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-            <button onClick={() => submit()}>ENTER</button>
+            <button onClick={() => submit(context)}>ENTER</button>
         </>
     );
 }
