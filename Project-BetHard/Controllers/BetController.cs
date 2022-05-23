@@ -28,18 +28,30 @@ namespace Project_BetHard.Controllers
             return await _context.Bets.ToListAsync();
         }
 
-        // GET: api/Bet/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Bet>> GetBet(int id)
+        // POST: api/Bet/5
+        [HttpPost("{id}")]
+        public async Task<ActionResult<Bet>> GetBetsForUser([FromBody] int id)
         {
-            var bet = await _context.Bets.FindAsync(id);
+            var bets = await _context.Bets.ToListAsync();
+            bets = bets.FindAll(x => x.User.Id == id);              //Detta måste gå att skriva på en rad, men kommer inte på hur just nu
 
-            if (bet == null)
+            if (bets == null)
             {
                 return NotFound();
             }
 
-            return bet;
+            return Ok(bets);
+        }
+
+        // POST: api/Bet
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Bet>> PostBet(Bet bet)
+        {
+            _context.Bets.Add(bet);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetBet", new { id = bet.Id }, bet);
         }
 
         // PUT: api/Bet/5
@@ -71,17 +83,6 @@ namespace Project_BetHard.Controllers
             }
 
             return NoContent();
-        }
-
-        // POST: api/Bet
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Bet>> PostBet(Bet bet)
-        {
-            _context.Bets.Add(bet);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBet", new { id = bet.Id }, bet);
         }
 
         // DELETE: api/Bet/5

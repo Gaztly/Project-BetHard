@@ -29,6 +29,7 @@ namespace Project_BetHard.Controllers
             if (!ModelState.IsValid || user == null) return BadRequest("Invalid fields");
 
             if (await _context.Users.AnyAsync(x => x.Username == user.Username)) return Conflict("Username taken.");
+
             if (await _context.Users.AnyAsync(x => x.Email == user.Email)) return Conflict("Email already in use.");
 
             var wallet = await _context.Wallets.AddAsync(new Wallet());
@@ -46,7 +47,7 @@ namespace Project_BetHard.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> RegisteredUser([FromBody] LoginInput input)
         {
-            if (!ModelState.IsValid || input == null) return BadRequest("Ogiltig input");       //Kolla giltig input
+            if (!ModelState.IsValid || input == null) return BadRequest("Invalid input");       //Kolla giltig input
 
             var user = await _context.Users.Include(u => u.Wallet).FirstAsync(x => x.Username == input.Username || x.Email == input.Username);     //Hitta användarnamn/email, hämta användare + wallet
 
