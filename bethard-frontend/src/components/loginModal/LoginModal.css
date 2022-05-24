@@ -1,0 +1,41 @@
+#login-modal-container {
+    position: relative;
+    top: 80px;
+    left: -120px;
+}
+
+#login-modal-window {
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+    padding: 1rem;
+    max-width: 400px;
+    max-height: 250px;
+    background-color: lightcoral;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    border-radius: 2px;
+}
+
+#login-modal-input-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.login-modal-input {
+    margin: 5px;
+    height: 25px;
+}
+
+.login-modal-input:focus {
+    outline: 1px black solid;
+}
+
+.login-modal-button {
+    margin-top: 10px;
+    width: 90px;
+    height: 30px;
+}
