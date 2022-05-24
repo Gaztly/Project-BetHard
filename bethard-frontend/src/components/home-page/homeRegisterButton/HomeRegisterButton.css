@@ -1,0 +1,38 @@
+#home-register-button-container {
+    flex-basis: 100%;
+}
+
+#home-register-button {
+    background-color: green;
+    border: 1px solid white;
+    width: fit-content;
+    font-size: 3rem;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 4rem;
+    color: black;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#home-register-button:hover {
+    background-color: rgb(2, 209, 2);
+    color: white;
+
+    animation: flashing-button 0.5s infinite;
+}
+
+@keyframes flashing-button {
+    0% {
+        background-color: rgb(2, 209, 2);
+    }
+    49% {
+        background-color: rgb(2, 209, 2);
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: red;
+    }
+}
