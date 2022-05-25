@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MobileNavbarButton } from "../mobileNavbarButton/MobileNavbarButton";
 import "./MobileNavbar.css";
+import RoutingPath from "../../../../Routes/RoutingPath";
 
 function MobileNavbar({ click, setClick }) {
     const handleClick = () => setClick(!click);
@@ -29,7 +30,7 @@ function MobileNavbar({ click, setClick }) {
             <ul className={click ? "nav-menu active" : "nav-menu"}>
                 <li className="nav-item">
                     <Link
-                        to="/"
+                        to={RoutingPath.Home}
                         className="nav-links"
                         onClick={closeMobileMenu}
                     >
@@ -38,7 +39,7 @@ function MobileNavbar({ click, setClick }) {
                 </li>
                 <li className="nav-item">
                     <Link
-                        to="/Login"
+                        to={RoutingPath.Login}
                         className="nav-links"
                         onClick={closeMobileMenu}
                     >
@@ -47,7 +48,7 @@ function MobileNavbar({ click, setClick }) {
                 </li>
                 <li className="nav-item">
                     <Link
-                        to="/Register"
+                        to={RoutingPath.Register}
                         className="nav-links-mobile"
                         onClick={closeMobileMenu}
                     >
