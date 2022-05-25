@@ -1,0 +1,42 @@
+:root {
+    --primary: #fff;
+}
+
+.mobile-navbar-btn {
+    padding: 8px 20px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.mobile-navbar-btn--primary {
+    background-color: var(--primary);
+    color: #242424;
+    border: 1px solid var(--primary);
+}
+
+.mobile-navbar-btn--outline {
+    background-color: transparent;
+    color: #fff;
+    padding: 8px 20px;
+    border: 1px solid var(--primary);
+    transition: all 0.3s ease-out;
+}
+
+.mobile-navbar-btn--medium {
+    padding: 8px 20px;
+    font-size: 20px;
+}
+
+.mobile-navbar-btn--large {
+    padding: 12px 26px;
+    font-size: 20px;
+}
+
+.mobile-navbar-btn--medium:hover,
+.mobile-navbar-btn--large:hover {
+    background-color: #fff;
+    color: #242424;
+    transition: all 0.3s ease-out;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import register from "../../api/services/register-service";
+import register from "../../shared/api/services/register-service";
 
 function Register() {
     const [username, setUsername] = useState("");

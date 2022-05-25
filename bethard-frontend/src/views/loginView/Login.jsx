@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import login from "../../api/services/login-service";
+import login from "../../shared/api/services/login-service";
 import UserContext from "../../context/userContext";
 
 function Login() {
