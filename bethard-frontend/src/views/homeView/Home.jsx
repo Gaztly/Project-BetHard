@@ -1,8 +1,8 @@
 import React from "react";
-import HomeBlurb from "../home-page/homeBlurb/HomeBlurb";
+import HomeBlurb from "../../components/home-page/homeBlurb/HomeBlurb";
 
-import HomeLogo from "../home-page/homeLogo/HomeLogo";
-import HomeRegisterButton from "../home-page/homeRegisterButton/HomeRegisterButton";
+import HomeLogo from "../../components/home-page/homeLogo/HomeLogo";
+import HomeRegisterButton from "../../components/home-page/homeRegisterButton/HomeRegisterButton";
 
 import "./Home.css";
 
