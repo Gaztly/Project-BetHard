@@ -1,0 +1,34 @@
+#user-info-container {
+    flex-basis: 100%;
+    text-align: right;
+}
+
+#user-info-background {
+    width: 40%;
+    margin: 0.8rem auto;
+    padding: 0.3rem 1rem;
+
+    background-color: rgb(117, 223, 117);
+    outline: 1px black solid;
+    border-radius: 5px;
+}
+
+.user-info-username {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.user-info-wallet {
+    padding: 0.4rem;
+}
+
+.user-info-wallet-text {
+    font-size: 1.2rem;
+    padding: 0.3rem;
+}
+
+.user-info-wallet-amount {
+    padding: 0.3rem 0rem;
+
+    font-size: 1.5rem;
+}
