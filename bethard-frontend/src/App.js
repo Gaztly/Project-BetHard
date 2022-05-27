@@ -1,15 +1,16 @@
+import { useState } from "react";
 import "./App.css";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
-import UserContext from "./context/userContext";
+import { UserProvider } from "./shared/provider/UserProvider";
 import Routes from "./Routes/Routing";
 
 function App() {
     return (
         <>
-            <UserContext.Provider value={""}>
+            <UserProvider>
                 <Routes Header={<Header />} Footer={<Footer />} />
-            </UserContext.Provider>
+            </UserProvider>
         </>
     );
 }

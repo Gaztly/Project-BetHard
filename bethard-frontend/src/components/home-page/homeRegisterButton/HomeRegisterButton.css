@@ -3,36 +3,18 @@
 }
 
 #home-register-button {
-    background-color: green;
+    background-color: rgb(4, 76, 143);
     border: 1px solid white;
     width: fit-content;
     font-size: 3rem;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 0.5em;
-    margin: 4rem;
-    color: black;
+    margin: 3rem 0;
+    color: white;
     cursor: pointer;
     transition: color 0.2s;
 }
 
 #home-register-button:hover {
-    background-color: rgb(2, 209, 2);
-    color: white;
-
-    animation: flashing-button 0.5s infinite;
-}
-
-@keyframes flashing-button {
-    0% {
-        background-color: rgb(2, 209, 2);
-    }
-    49% {
-        background-color: rgb(2, 209, 2);
-    }
-    50% {
-        background-color: red;
-    }
-    100% {
-        background-color: red;
-    }
+    background-color: rgb(67, 160, 221);
 }

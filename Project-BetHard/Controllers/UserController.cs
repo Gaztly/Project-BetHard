@@ -45,11 +45,11 @@ namespace Project_BetHard.Controllers
         //POST: api/user/Login
         [Route("Login")]
         [HttpPost]
-        public async Task<ActionResult<User>> RegisteredUser([FromBody] LoginInput input)
+        public async Task<ActionResult<User>> Login([FromBody] LoginInput input)
         {
             if (!ModelState.IsValid || input == null) return BadRequest("Invalid input");       //Kolla giltig input
 
-            var user = await _context.Users.Include(u => u.Wallet).FirstAsync(x => x.Username == input.Username || x.Email == input.Username);     //Hitta användarnamn/email, hämta användare + wallet
+            var user = await _context.Users.Include(u => u.Wallet).FirstOrDefaultAsync(x => x.Username == input.Username || x.Email == input.Username);    //Hitta användarnamn/email, hämta användare + wallet
 
             if (user == null) return BadRequest("Cannot find username or email.");          //Returnera BadRequest om ogiltigt
 
