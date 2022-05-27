@@ -1,0 +1,23 @@
+#billboard {
+  gap: 3px;
+  grid-column: 3/4;
+  width: 100%;
+  height: 25%;
+  grid-row: 3;
+}
+input {
+  width: 100%;
+  text-align: center;
+  font-size: larger;
+}
+button {
+  width: 100%;
+  height: 25px;
+}
+
+#texting {
+  grid-column: 2;
+  grid-row: 2/4;
+  width: 100%;
+  height: 100%;
+}

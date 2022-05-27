@@ -5,8 +5,8 @@ import "./Navigation.css";
 import RoutingPath from "../../../Routes/RoutingPath";
 
 function Navigation() {
-    const [click, setClick] = useState(false);
-    const closeMobileMenu = () => setClick(false);
+  const [click, setClick] = useState(false);
+  const closeMobileMenu = () => setClick(false);
 
     return (
         <nav className="navbar">
