@@ -25,5 +25,9 @@ namespace Project_BetHard.Models
             this.Token = Util.Token.GetToken(user);
             this.Expiration = expiration;
         }
+
+        public UserReturnObject()
+        {
+        }
     }
 }
