@@ -31,8 +31,9 @@ namespace Project_BetHard.Controllers
             return await _context.Bets.ToListAsync();
         }
 
-        // POST: api/Bet/5
-        [HttpPost("{id}")]
+        // POST: api/Bet/getbetsforuser
+        [Route("getbetsforuser")]
+        [HttpPost]
         public async Task<ActionResult<Bet>> GetBetsForUser([FromBody] int id)
         {
             var bets = await _context.Bets.ToListAsync();
