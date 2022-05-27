@@ -2,18 +2,17 @@ import React from "react";
 import "./App.css";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
-import UserContext from "./context/userContext";
+import { UserProvider } from "./shared/provider/UserProvider";
 import Routes from "./Routes/Routing";
-import { useContext } from "react";
 
 function App() {
-  return (
-    <>
-      <UserContext.Provider value={""}>
-        <Routes Header={<Header />} Footer={<Footer />} />
-      </UserContext.Provider>
-    </>
-  );
+    return (
+        <>
+            <UserProvider>
+                <Routes Header={<Header />} Footer={<Footer />} />
+            </UserProvider>
+        </>
+    );
 }
 
 export default App;

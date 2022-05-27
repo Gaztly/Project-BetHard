@@ -1,0 +1,14 @@
+#home-guest-container {
+    width: 100%;
+    height: calc(100vh - 110px);
+
+    text-align: center;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+#home-guest-background-image {
+    height: 100%;
+    background-image: url("../../shared/img/home-guest-background.jpg");
+    background-position: bottom;
+}

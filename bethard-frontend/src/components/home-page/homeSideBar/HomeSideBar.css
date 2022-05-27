@@ -1,0 +1,16 @@
+.home-sidebar-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: black;
+    border-right: 1px solid white;
+    box-shadow: -5px 0px 20px 0px rgba(255, 255, 255, 0.4) inset;
+
+    color: white;
+    padding: 2rem 0;
+}
+
+.home-sidebar-header-text {
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+}

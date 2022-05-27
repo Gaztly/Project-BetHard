@@ -1,0 +1,9 @@
+#home-main-content-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    background-image: url("../../../shared/img/home-main-content-background.jpg");
+    background-size: cover;
+    background-position: center;
+}
