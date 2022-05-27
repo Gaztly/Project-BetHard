@@ -41,8 +41,6 @@ namespace Project_BetHard.Controllers
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
-            user.Password = "";
-
             return Ok(new UserReturnObject(user));
         }
 
@@ -65,7 +63,6 @@ namespace Project_BetHard.Controllers
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
-            user.Password = "";
             return Ok(new UserReturnObject(user));
         }
 
@@ -76,7 +73,7 @@ namespace Project_BetHard.Controllers
         {
             var user = await _context.Users.Include(u => u.Wallet).FirstOrDefaultAsync(u => u.Username == input.Username);
 
-            if (!Util.Token.ValidateToken(input.Token, user)) return Unauthorized("Expired login.");
+            if (!Util.Token.ValidateToken(input.Token, user)) return Unauthorized("Invalid or expired login.");
 
             return Ok(input);
         }
