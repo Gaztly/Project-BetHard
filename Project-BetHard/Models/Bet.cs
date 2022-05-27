@@ -22,5 +22,15 @@ namespace Project_BetHard.Models
 
         [Required]
         public int MatchId { get; set; }
+
+        [Required]
+        public double OddsWhenBetsMade { get; set; }
+
+        [Required]
+        public char BetTeam { get; set; }
+
+
+
+
     }
 }
