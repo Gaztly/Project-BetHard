@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -8,9 +9,9 @@ namespace Project_BetHard.Util
     public class Encryption
     {
         //Encrpts plain text with AES
-        public static byte[] Encrypt(string plainText, byte[] Key, byte[] IV)
+        public static byte[] Encrypt(string data, byte[] Key, byte[] IV)
         {
-            if (plainText == null || plainText.Length <= 0)
+            if (data == null || data.Length <= 0)
                 throw new ArgumentNullException("plainText");
             if (Key == null || Key.Length <= 0)
                 throw new ArgumentNullException("Key");
@@ -20,20 +21,27 @@ namespace Project_BetHard.Util
 
             using (Aes aesAlg = Aes.Create())
             {
+                aesAlg.Mode = CipherMode.CBC;
+                aesAlg.KeySize = Key.Length * 8;
+                aesAlg.BlockSize = IV.Length * 8;
+                aesAlg.Padding = PaddingMode.Zeros;
+
                 aesAlg.Key = Key;
                 aesAlg.IV = IV;
 
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                using (MemoryStream msEncrypt = new MemoryStream())
+                using (ICryptoTransform encryptor = aesAlg.CreateEncryptor())
                 {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    using (MemoryStream msEncrypt = new MemoryStream())
                     {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                         {
-                            swEncrypt.Write(plainText);
+                            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                            {
+                                //Write all data to the stream.
+                                swEncrypt.Write(data);
+                            }
+                            encrypted = msEncrypt.ToArray();
                         }
-                        encrypted = msEncrypt.ToArray();
                     }
                 }
             }
@@ -53,18 +61,24 @@ namespace Project_BetHard.Util
 
             using (Aes aesAlg = Aes.Create())
             {
+                aesAlg.Mode = CipherMode.CBC;
+                aesAlg.KeySize = Key.Length * 8;
+                aesAlg.BlockSize = IV.Length * 8;
+                aesAlg.Padding = PaddingMode.Zeros;
+
                 aesAlg.Key = Key;
                 aesAlg.IV = IV;
 
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                using (MemoryStream msDecrypt = new MemoryStream(data))
+                using (ICryptoTransform decryptor = aesAlg.CreateDecryptor())
                 {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    using (MemoryStream msDecrypt = new MemoryStream(data))
                     {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                         {
-                            decrypted = srDecrypt.ReadToEnd();
+                            using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                            {
+                                decrypted = srDecrypt.ReadToEnd();
+                            }
                         }
                     }
                 }
