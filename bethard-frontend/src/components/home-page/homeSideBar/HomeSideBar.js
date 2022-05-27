@@ -1,5 +1,5 @@
 import React from "react";
-import HomeBets from "../homeMainContent/homeBets/HomeBets";
+import HomeBets from "./homeBets/HomeBets";
 
 import "./HomeSideBar.css";
 

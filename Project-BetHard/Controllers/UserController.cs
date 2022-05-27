@@ -24,28 +24,32 @@ namespace Project_BetHard.Controllers
         //POST: api/user/RegisterUser
         [Route("RegisterUser")]
         [HttpPost]
-        public async Task<ActionResult<User>> RegisterUser([FromBody] User user)
+        public async Task<ActionResult<UserReturnObject>> RegisterUser([FromBody] User user)
         {
-            if (!ModelState.IsValid || user == null) return BadRequest("Invalid fields");
+            if (!ModelState.IsValid || user == null) return BadRequest("Invalid fields");       //Invalid fields
 
-            if (await _context.Users.AnyAsync(x => x.Username == user.Username)) return Conflict("Username taken.");
+            if (await _context.Users.AnyAsync(x => x.Username == user.Username)) return Conflict("Username taken.");        //Användarnamn upptaget
 
-            if (await _context.Users.AnyAsync(x => x.Email == user.Email)) return Conflict("Email already in use.");
+            if (await _context.Users.AnyAsync(x => x.Email == user.Email)) return Conflict("Email already in use.");        //Email upptagen
 
-            var wallet = await _context.Wallets.AddAsync(new Wallet());
+            var wallet = await _context.Wallets.AddAsync(new Wallet());             //Skapar ny wallet och assignar den
             user.Wallet = wallet.Entity;
+
+            user.IV = Util.Encryption.GetIV();          //Hämtar IV för användaren
+            user.IVExpiration = Util.Expiration.GetIVExpiration();
+
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
             user.Password = "";
 
-            return Ok(user);
+            return Ok(new UserReturnObject(user));
         }
 
         //POST: api/user/Login
         [Route("Login")]
         [HttpPost]
-        public async Task<ActionResult<User>> Login([FromBody] LoginInput input)
+        public async Task<ActionResult<UserReturnObject>> Login([FromBody] LoginInput input)
         {
             if (!ModelState.IsValid || input == null) return BadRequest("Invalid input");       //Kolla giltig input
 
@@ -53,10 +57,28 @@ namespace Project_BetHard.Controllers
 
             if (user == null) return BadRequest("Cannot find username or email.");          //Returnera BadRequest om ogiltigt
 
-            if (user.Password != input.Password) return BadRequest("Incorrect password");   //Returnera BadRequest om fel lösen
+            if (user.Password != input.Password) return BadRequest("Incorrect password.");   //Returnera BadRequest om fel lösen
+
+            user.IV = Util.Encryption.GetIV();          //Hämtar IV för användaren
+            user.IVExpiration = Util.Expiration.GetIVExpiration();
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
 
             user.Password = "";
-            return Ok(user);
+            return Ok(new UserReturnObject(user));
+        }
+
+        //POST: api/user/validate
+        [Route("Validate")]
+        [HttpPost]
+        public async Task<ActionResult<UserReturnObject>> Validate([FromBody] UserReturnObject input)
+        {
+            var user = await _context.Users.Include(u => u.Wallet).FirstOrDefaultAsync(u => u.Username == input.Username);
+
+            if (!Util.Token.ValidateToken(input.Token, user)) return Unauthorized("Expired login.");
+
+            return Ok(input);
         }
 
         // GET: api/User
@@ -110,17 +132,6 @@ namespace Project_BetHard.Controllers
 
             return NoContent();
         }
-
-        // POST: api/User
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<User>> PostUser(User user)
-        //{
-        //    _context.Users.Add(user);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetUser", new { id = user.Id }, user);
-        //}
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
