@@ -52,18 +52,20 @@ namespace Project_BetHard.Controllers
         public async Task<ActionResult<Bet>> PostBet([FromBody]BetInput input) 
         {
 
-            //_context.Bets.Add(bet);
-            //Få in ett bet och lägga till den i DB
+            
+         
             if (!ModelState.IsValid || input == null) return BadRequest("Invalid fields");
 
-            //if (await _context.Bets.AnyAsync(x => x.Id == bet.Id)) return Conflict("Bet already made");
+            
 
 
 
 
-            var bet = input.Bet;
+            var bet = input.Bet; // tar bet från input och gör till ett bet. matchID och betamount sparas
             var user = await _context.Users.Include(u => u.Wallet).FirstAsync(x => x.Id == input.UserId);
+            //User sparas i user, där användarei DB stämmer överrens med input-användaren.
             bet.User = user;
+            //user sparas ner i bet.user. Bet är nu ett fullständigt ifyllt objekt.
 
             var wallet = user.Wallet;
             if (wallet.Balance < input.Bet.BetAmount) return BadRequest("Insufficent funds");
