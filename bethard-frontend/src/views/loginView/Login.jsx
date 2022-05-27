@@ -15,12 +15,13 @@ function Login() {
 
     const submit = async () => {
         const userObject = await login(username, password);
-        console.log(userObject.status);
+
         if (userObject.status !== 200) {
             console.log("No user");
             setErrorMessage(userObject.data);
             return;
         }
+
         setUser(userObject.data);
         console.log("test");
         localStorage.setItem(
