@@ -1,10 +1,9 @@
-// import API from "../football-api";
+import API from "../../football-api";
 
-// const getMatchesPl = () => {
-//     return API.get("PL/matches/")
-//     .catch((error) => {
-//         return error.response;
-//     });
-// };
+const getMatchesPl = () => {
+    return API.get("v4/PL/matches").catch((error) => {
+        return error.response;
+    });
+};
 
-// export default getMatchesPl;
+export default getMatchesPl;

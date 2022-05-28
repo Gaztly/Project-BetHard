@@ -1,44 +1,23 @@
-import getMatchesPl from "../../../shared/api/services/footballServices/getMatchesPl"
-
-import React from 'react';
-import  Axios  from "axios";
-import dotenv from "dotenv"
-
-
+import React, { useEffect, useState } from "react";
+import getMatchesPl from "../../../shared/api/services/footballServices/getMatchesPl";
 
 function Matches() {
-    // const [match, setMatch] = useState("")
-    reuquire("dotenv").config();
-    Axios.get(`"https://api.football-data.org/v4/PL/matches?api_key=${process.env.REACT_APP_FOOTBALL-TOKEN}`).then(response =>{
-        console.log(response)
-    // setMatch(response.data)
-    })
-    //  console.log(response.matches.id)
-    
-//    response.map(match => {
-//         return(
-//              {match.matches.map( data =>{
-//                  return(
-//                      <div key={match.matches.id}
-//                      {data.id.hometeam}
-//                      </div>
-//                  )
-//              })}   
-                
-            
-//         )
-//     }))
+    const [match, setMatch] = useState(null);
+
+    const getMatches = () => {
+        // Funktion som hämtar matcherna från getMatchesPl och assignar dem till match med setMatch
+        const response = getMatchesPl(); // Efter hämtningen kan man lägga till felmeddelanden och sånt (t.ex. visa ett felmeddelande om responsen inte har koden 200)
+
+        setMatch(response.data);
+        console.log(match);
+    };
+
+    useEffect(() => {
+        // useEffect kommer köra funktionen för att hämta matcher om matcher inte redan hämtats, och endast när komponenten Matches laddats in
+        if (match === null) getMatches();
+    }, []);
+
+    return <div></div>;
 }
 
-export default Matches
-
-// function Matches() 
-//     const response = getMatchesPl()
-//     const data = response.data;
-    
-// console.log(data.map())
-
-   
-
-
-
+export default Matches;

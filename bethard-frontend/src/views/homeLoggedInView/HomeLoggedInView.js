@@ -8,7 +8,6 @@ function HomeLoggedInView() {
     return (
         <div id="home-logged-in-container">
             <HomeSideBar />
-            <Matches/>
             <HomeMainContent />
         </div>
     );
