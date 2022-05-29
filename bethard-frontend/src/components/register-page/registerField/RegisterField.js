@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./RegisterField.css";
 import register from "../../../shared/api/services/register-service";
+import video from "../videos/balls.mp4";
 
 function RegisterField() {
   const [username, setUsername] = useState("");
@@ -19,27 +20,41 @@ function RegisterField() {
   return (
     <>
       <div id="billboard">
-        <br />
+        <h1 id="regtext">Register</h1>
+
         <input
+          id="reginput"
           type="text"
           placeholder="username"
           onChange={(e) => setUsername(e.target.value)}
         />
+        <br />
         <input
+          id="reginput"
           type="password"
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
         <input
+          id="reginput"
           type="email"
           placeholder="email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <input type="date" onChange={(e) => setBirtday(e.target.value)} />
-        <button onClick={() => submit()}>ENTER</button>
+        <br />
+        <input
+          id="reginput"
+          type="date"
+          onChange={(e) => setBirtday(e.target.value)}
+        />
+        <br />
+        <button id="btn" onClick={() => submit()}>
+          SUBMIT
+        </button>
       </div>
-      <div id="texting">sadasdsad</div>
+      <video src={video} id="videos" autoPlay loop muted></video>
+      {/* <div id="imgleft"></div> */}
     </>
   );
 }
