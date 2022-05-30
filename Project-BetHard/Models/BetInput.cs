@@ -12,7 +12,6 @@ namespace Project_BetHard.Models
         public Bet Bet { get; set; }
 
         [Required]
-        public int UserId { get; set; }
-
+        public UserReturnObject userReturn { get; set; }
     }
 }
