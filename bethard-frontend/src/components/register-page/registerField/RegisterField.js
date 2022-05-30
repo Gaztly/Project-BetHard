@@ -28,6 +28,7 @@ function RegisterField() {
           placeholder="username"
           onChange={(e) => setUsername(e.target.value)}
         />
+        <i class="fa-solid fa-user"></i>
         <br />
         <input
           id="reginput"
@@ -35,13 +36,16 @@ function RegisterField() {
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <i class="fa-solid fa-key"></i>
         <br />
+
         <input
           id="reginput"
           type="email"
           placeholder="email"
           onChange={(e) => setEmail(e.target.value)}
         />
+        <i class="fa-solid fa-envelope"></i>
         <br />
         <input
           id="reginput"
