@@ -1,17 +1,9 @@
-.register-blurb-container {
-  background-color: none;
-  color: red;
-}
-
-#billboard1 {
-  grid-row: 2;
-  grid-column: 3/4;
-  margin-left: 0;
-  margin-top: 20px;
-  text-align: center;
-}
 #billboards {
-  grid-column: 3/4;
-  height: 25%;
-  margin-bottom: 0;
+  grid-column: 3;
+  grid-row: 3;
+  width: 100%;
+  text-transform: uppercase;
+  text-shadow: 2px 2px black;
+  font-weight: bolder;
+  font-size: larger;
 }
