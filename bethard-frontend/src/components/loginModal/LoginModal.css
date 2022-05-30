@@ -1,7 +1,4 @@
 #login-modal-container {
-    position: relative;
-    top: 80px;
-    left: -120px;
 }
 
 #login-modal-window {
@@ -23,6 +20,10 @@
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+.login-modal-warning-text {
+    color: red;
 }
 
 .login-modal-input {

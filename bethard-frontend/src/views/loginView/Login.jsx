@@ -11,7 +11,7 @@ function Login() {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    var [user, setUser] = useContext(UserContext);
+    const [user, setUser] = useContext(UserContext);
 
     const submit = async () => {
         const userObject = await login(username, password);
