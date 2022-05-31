@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project_BetHard.Database;
 using Project_BetHard.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,93 +26,56 @@ namespace Project_BetHard.Controllers
         }
 
         // GET: api/Matches
+        [Route("getallmatches")]
         [HttpGet]
-        public async Task<IActionResult> GetMatch() //  IactionResult Returnar Ok()
+        public async Task<IActionResult> GetAllMatches() //  IactionResult Returnar Ok()
         {
-            var matches = Util.ApiCalls.GetBrazilMatches(); //skapar en lista av gebrazilmatches()
+            List<Match> matches;
+            var update = await _context.UpdateHistories.LastOrDefaultAsync();
+            if (update == null || update.LastUpdate < DateTime.UtcNow.AddMinutes(10))
+            {
+                 matches = await Util.ApiCalls.GetBrazilMatches(); //skapar en lista av getbrazilmatches()
+                foreach (var item in matches)
+                {
+                    _context.ChangeTracker.Clear();
+                    _context.Attach(item);
+                    _context.Matches.Update(item);
+                    await _context.SaveChangesAsync();
+                }
+                
+            }
+            else
+            {
+                matches = await _context.Matches.ToListAsync();
+            }
 
-
+  
             return Ok(matches);
 
+        
         }
 
+      
 
 
-        // GET: api/Matches/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Match>> GetMatch(int id) // returnar ett objekt
-        {
-            var match = await _context.Match.FindAsync(id);
+        //// GET: api/Matches
+        //[HttpGet]
+        //public async Task<IActionResult> GetMatch() //  IactionResult Returnar Ok()
+        //{
 
-            if (match == null)
-            {
-                return NotFound();
-            }
+        //    List<Match> matches = await Util.ApiCalls.GetBrazilMatches(); //skapar en lista av getbrazilmatches()
 
-            return match;
-        }
+        //    foreach (var item in matches)
+        //    {
+        //        _context.ChangeTracker.Clear();
+        //        _context.Attach(item);
+        //        await _context.Matches.AddAsync(item);
+        //        await _context.SaveChangesAsync();
+        //    }
 
-        // PUT: api/Matches/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMatch(int id, Match match)
-        {
-            if (id != match.Id)
-            {
-                return BadRequest();
-            }
+        //    return Ok(matches);
 
-            _context.Entry(match).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MatchExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Matches
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Match>> PostMatch(Match match)
-        {
-            _context.Match.Add(match);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMatch", new { id = match.Id }, match);
-        }
-
-        // DELETE: api/Matches/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMatch(int id)
-        {
-            var match = await _context.Match.FindAsync(id);
-            if (match == null)
-            {
-                return NotFound();
-            }
-
-            _context.Match.Remove(match);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool MatchExists(int id)
-        {
-            return _context.Match.Any(e => e.Id == id);
-        }
+        //    //Skapa en update på alla matcher som ändrats.
+        //}
     }
 }
