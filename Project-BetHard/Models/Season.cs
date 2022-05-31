@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project_BetHard.Models
 {
     public class Season
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id   { get; set; }
 
         public DateTime? StartDate { get; set; }
