@@ -17,5 +17,10 @@ namespace Project_BetHard.Database
         public DbSet<User> Users { get; set; }
 
         public DbSet<Wallet> Wallets { get; set; }
+
+        public DbSet<Project_BetHard.Models.Match> Match { get; set; }
+
+
+        
     }
 }
