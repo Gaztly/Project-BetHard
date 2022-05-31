@@ -1,0 +1,13 @@
+﻿namespace Project_BetHard.Models
+{
+    public class Team
+    {
+        public int Id { get; set; }
+
+        public string? Name { get; set; }
+
+        public string? Tla { get; set; }
+
+        public string? Crest { get; set; }
+    }
+}
