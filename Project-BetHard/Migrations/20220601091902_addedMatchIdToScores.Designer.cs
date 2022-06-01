@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_BetHard.Database;
 
 namespace Project_BetHard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220601091902_addedMatchIdToScores")]
+    partial class addedMatchIdToScores
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,8 +156,7 @@ namespace Project_BetHard.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MatchId")
-                        .IsUnique();
+                    b.HasIndex("MatchId");
 
                     b.ToTable("Odds");
                 });
@@ -379,7 +380,7 @@ namespace Project_BetHard.Migrations
                 {
                     b.HasOne("Project_BetHard.Models.Match", null)
                         .WithOne("Odds")
-                        .HasForeignKey("Project_BetHard.Models.Odds", "MatchId")
+                        .HasForeignKey("Project_BetHard.Models.Odds", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

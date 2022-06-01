@@ -14,15 +14,11 @@ namespace Project_BetHard.Controllers
     [ApiController]
     public class MatchesController : ControllerBase
     {
-
-
-
         private readonly ApplicationDbContext _context;
 
         public MatchesController(ApplicationDbContext context)
         {
             _context = context;
-
         }
 
         // GET: api/Matches
@@ -31,51 +27,249 @@ namespace Project_BetHard.Controllers
         public async Task<IActionResult> GetAllMatches() //  IactionResult Returnar Ok()
         {
             List<Match> matches;
-            var update = await _context.UpdateHistories.LastOrDefaultAsync();
-            if (update == null || update.LastUpdate < DateTime.UtcNow.AddMinutes(10))
+            if (await CheckIfUpdate())
             {
-                 matches = await Util.ApiCalls.GetBrazilMatches(); //skapar en lista av getbrazilmatches()
-                foreach (var item in matches)
+                matches = await GetMatchesWithIDs();
+                foreach (var match in matches)
                 {
                     _context.ChangeTracker.Clear();
-                    _context.Attach(item);
-                    _context.Matches.Update(item);
+                    _context.Attach(match);
+
+                    _context.Matches.Update(match);
                     await _context.SaveChangesAsync();
                 }
-                
+                await _context.UpdateHistories.AddAsync(new UpdateHistory());
+                await _context.SaveChangesAsync();
             }
             else
             {
-                matches = await _context.Matches.ToListAsync();
+                matches = await _context.Matches
+                    .Include(m => m.Area)
+                    .Include(m => m.Season)
+                    .Include(m => m.Competition)
+                    .Include(m => m.HomeTeam)
+                    .Include(m => m.AwayTeam)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.HalfTime)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.FullTime)
+                    .Include(m => m.Odds)
+                    .ToListAsync();
             }
-
-  
             return Ok(matches);
-
-        
         }
 
-      
+        [Route("getrelevantmatches")]
+        [HttpGet]
+        public async Task<IActionResult> GetRelevantMatches() //  IactionResult Returnar Ok()
+        {
+            List<Match> matches;
 
+            if (await CheckIfUpdate())
+            {
+                matches = await GetMatchesWithIDs();
+                for (int i = 0; i < matches.Count; i++)
+                {
+                    if (matches[i].UtcDate > DateTime.UtcNow.AddDays(14) || matches[i].UtcDate > DateTime.UtcNow.AddDays(-14))
+                    {
+                        matches.RemoveAt(i);
+                        continue;
+                    }
+
+                    _context.ChangeTracker.Clear();
+                    _context.Attach(matches[i]);
+                    _context.Matches.Update(matches[i]);
+                    await _context.SaveChangesAsync();
+                }
+                await _context.UpdateHistories.AddAsync(new UpdateHistory());
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                matches = await _context.Matches
+                    .Include(m => m.Area)
+                    .Include(m => m.Season)
+                    .Include(m => m.Competition)
+                    .Include(m => m.HomeTeam)
+                    .Include(m => m.AwayTeam)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.HalfTime)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.FullTime)
+                    .Include(m => m.Odds)
+                    .Where(m => m.UtcDate > DateTime.UtcNow.AddDays(-14) && m.UtcDate < DateTime.UtcNow.AddDays(14))
+                    .ToListAsync();
+            }
+            return Ok(matches);
+        }
+
+        //Hämtar en match utifrån dess id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMatchById(int id)
+        {
+            var match = await _context.Matches
+                    .Include(m => m.Area)
+                    .Include(m => m.Season)
+                    .Include(m => m.Competition)
+                    .Include(m => m.HomeTeam)
+                    .Include(m => m.AwayTeam)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.HalfTime)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.FullTime)
+                    .Include(m => m.Odds)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (match == null) return NotFound();
+
+            return Ok(match);
+        }
+
+        [Route("matchhistory")]
+        [HttpGet]
+        public async Task<IActionResult> GetMatchHistory()
+        {
+            List<Match> matches;
+            if (await CheckIfUpdate())
+            {
+                matches = await GetMatchesWithIDs();
+                for (int i = 0; i < matches.Count; i++)
+                {
+                    if (matches[i].UtcDate > DateTime.UtcNow)                       //Tar bort matcher som INTE har spelats
+                    {
+                        matches.RemoveAt(i);
+                        continue;
+                    }
+
+                    _context.ChangeTracker.Clear();
+                    _context.Attach(matches[i]);
+                    _context.Matches.Update(matches[i]);
+                    await _context.SaveChangesAsync();
+                }
+                //await _context.UpdateHistories.AddAsync(new UpdateHistory());        //Skriver inte till updatehistory då den bara uppdaterat gångna matcher
+                //await _context.SaveChangesAsync();
+            }
+            else
+            {
+                matches = await _context.Matches
+                    .Include(m => m.Area)
+                    .Include(m => m.Season)
+                    .Include(m => m.Competition)
+                    .Include(m => m.HomeTeam)
+                    .Include(m => m.AwayTeam)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.HalfTime)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.FullTime)
+                    .Include(m => m.Odds)
+                    .Where(m => m.UtcDate < DateTime.UtcNow)
+                    .ToListAsync();
+            }
+            return Ok(matches);
+        }
+
+        [Route("AllComingMatches")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllComingMatches()
+        {
+            List<Match> matches;
+            if (await CheckIfUpdate())            //Om servern inte uppdaterats inom de senaste 10 minuterna så kör den uppdateringen
+            {
+                matches = await GetMatchesWithIDs();
+                for (int i = 0; i < matches.Count; i++)
+                {
+                    if (matches[i].Status.ToUpper() == "FINISHED") continue;          //Uppdaterar inte matcher vars resultat redan är färdigrapporterat
+                    if (matches[i].UtcDate > DateTime.UtcNow)                       //Tar bort matcher som är i framtiden
+                    {
+                        matches.RemoveAt(i);
+                        continue;
+                    }
+
+                    _context.ChangeTracker.Clear();
+                    _context.Attach(matches[i]);
+                    _context.Matches.Update(matches[i]);
+                    await _context.SaveChangesAsync();
+                }
+                //await _context.UpdateHistories.AddAsync(new UpdateHistory());        //Skriver inte till updatehistory då den bara uppdaterat gångna matcher
+                //await _context.SaveChangesAsync();
+            }
+            else
+            {
+                matches = await _context.Matches
+                    .Include(m => m.Area)
+                    .Include(m => m.Season)
+                    .Include(m => m.Competition)
+                    .Include(m => m.HomeTeam)
+                    .Include(m => m.AwayTeam)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.HalfTime)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.FullTime)
+                    .Include(m => m.Odds)
+                    .Where(m => m.UtcDate < DateTime.UtcNow)
+                    .ToListAsync();
+            }
+            return Ok(matches);
+        }
+
+        /// <summary>
+        ///                  UTIL METHODS
+        /// </summary>
+
+        //Get all matches, with IDs assigned to the odds, scores, halftimes and fulltimes objects
+        public async Task<List<Match>> GetMatchesWithIDs()
+        {
+            var odds = await _context.Odds.ToListAsync();
+            var score = await _context.Scores.Include(x => x.FullTime).Include(x => x.HalfTime).ToListAsync();
+            List<Match> matches = await Util.ApiCalls.GetBrazilMatches(); //skapar en lista av getbrazilmatches()
+
+            foreach (Match match in matches)
+            {
+                //Add IDs and MatchId(foreign key) to Odds, Score, HalfTime, and FullTime
+                match.Odds.MatchId = match.Id;
+                match.Odds.Id = odds.First(x => x.MatchId == match.Id).Id;
+
+                match.Score.MatchId = match.Id;
+                match.Score.Id = score.First(x => x.MatchId == match.Id).Id;
+
+                match.Score.HalfTime.MatchId = match.Id;
+                match.Score.HalfTime.Id = score.First(x => x.MatchId == match.Id).HalfTime.Id;
+
+                match.Score.FullTime.MatchId = match.Id;
+                match.Score.FullTime.Id = score.First(x => x.MatchId == match.Id).FullTime.Id;
+            }
+            return matches;
+        }
+
+        //Check if an update is needed
+        public async Task<bool> CheckIfUpdate()
+        {
+            var lastUpdate = await _context.UpdateHistories.OrderBy(x => x.Id).LastOrDefaultAsync();        //Fetch latest update from database
+            return lastUpdate == null || lastUpdate.LastUpdate < DateTime.UtcNow.AddMinutes(-10);           //Check if last update is more than 10 minutes ago
+        }
 
         //// GET: api/Matches
+        //[Route("Filldb")]
         //[HttpGet]
         //public async Task<IActionResult> GetMatch() //  IactionResult Returnar Ok()
         //{
-
         //    List<Match> matches = await Util.ApiCalls.GetBrazilMatches(); //skapar en lista av getbrazilmatches()
 
-        //    foreach (var item in matches)
+        //    foreach (var match in matches)
         //    {
+        //        match.Odds.MatchId = match.Id;
+        //        match.Score.MatchId = match.Id;
+        //        match.Score.HalfTime.MatchId = match.Id;
+        //        match.Score.FullTime.MatchId = match.Id;
+
         //        _context.ChangeTracker.Clear();
-        //        _context.Attach(item);
-        //        await _context.Matches.AddAsync(item);
+        //        _context.Attach(match);
+
+        //        await _context.Matches.AddAsync(match);
         //        await _context.SaveChangesAsync();
         //    }
 
         //    return Ok(matches);
-
-        //    //Skapa en update på alla matcher som ändrats.
         //}
     }
 }
