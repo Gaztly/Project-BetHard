@@ -4,6 +4,7 @@ import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import { UserProvider } from "./shared/provider/UserProvider";
 import Routes from "./Routes/Routing";
+import "../src/shared/global/globalstyles.css";
 
 function App() {
     return (
