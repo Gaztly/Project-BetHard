@@ -47,3 +47,9 @@
 #home-logo-icon {
     font-size: 4rem;
 }
+
+@media screen and (max-width: 600px) {
+    #home-logo-text {
+        margin: 7rem auto 1rem auto;
+    }
+}

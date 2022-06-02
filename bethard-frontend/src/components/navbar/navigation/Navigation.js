@@ -26,11 +26,13 @@ function Navigation() {
     };
 
     return (
-        <nav className="navbar">
+        <nav className={user ? "navbar navbar-center" : "navbar"}>
             <div className="navbar-container">
                 <Link
                     to={RoutingPath.Home}
-                    className="navbar-logo"
+                    className={
+                        user ? "navbar-logo" : "navbar-logo navbar-logo-left"
+                    }
                     onClick={closeMobileMenu}
                 >
                     BetHard <i class="fa-solid fa-money-bill-1"></i>

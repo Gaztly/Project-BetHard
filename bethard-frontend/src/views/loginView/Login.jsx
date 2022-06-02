@@ -5,6 +5,8 @@ import login from "../../shared/api/services/login-service";
 import { UserContext } from "../../shared/provider/UserProvider";
 import LocalStorage from "../../shared/storage/LocalStorage";
 
+import "./Login.css";
+
 function Login() {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
@@ -13,17 +15,17 @@ function Login() {
 
     const [user, setUser] = useContext(UserContext);
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault();
+
         const userObject = await login(username, password);
 
         if (userObject.status !== 200) {
-            console.log("No user");
             setErrorMessage(userObject.data);
             return;
         }
 
         setUser(userObject.data);
-        console.log("test");
         localStorage.setItem(
             LocalStorage.user,
             JSON.stringify(userObject.data)
@@ -33,23 +35,32 @@ function Login() {
     };
 
     return (
-        <>
-            <div>
-                This is the login page
-                <div style={{ color: "red" }}>{errorMessage}</div>
-                <input
-                    type="text"
-                    placeholder="username"
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+        <div className="login-container">
+            <div className="login-container-text">
+                <div className="login-text-big">Log in</div>
+                <div className="login-text-small">To bet harder</div>
             </div>
-            <button onClick={() => submit()}>ENTER</button>
-        </>
+            <form className="login-form" onSubmit={(e) => submit(e)}>
+                <div className="login-input-container">
+                    <input
+                        className="login-input-field"
+                        type="text"
+                        placeholder="username"
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <input
+                        className="login-input-field"
+                        type="password"
+                        placeholder="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button className="login-input-button" type="submit">
+                        ENTER
+                    </button>
+                    <div style={{ color: "red" }}>{errorMessage}</div>
+                </div>
+            </form>
+        </div>
     );
 }
 
