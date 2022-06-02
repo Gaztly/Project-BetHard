@@ -1,22 +1,25 @@
 .navbar {
     background: linear-gradient(
-        90deg,
-        rgb(228, 227, 227) 0%,
-        rgb(16, 13, 13) 100%
+        315deg,
+        var(--clr-GradientStart),
+        var(--clr-GradientEnd)
     );
     height: 80px;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     font-size: 1.2rem;
     position: sticky;
     top: 0;
-    z-index: 999;
+}
+
+.navbar-center {
+    justify-content: center;
 }
 
 .navbar-container {
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     height: 80px;
     max-width: 1500px;
@@ -24,13 +27,16 @@
 
 .navbar-logo {
     color: #242222;
-    justify-self: start;
-    margin-left: 20px;
     cursor: pointer;
     text-decoration: none;
     font-size: 2rem;
     display: flex;
     align-items: center;
+    margin-left: 20px;
+}
+
+.navbar-logo-left {
+    justify-self: start;
     position: absolute;
     top: 0;
     left: 0;
@@ -41,3 +47,6 @@
     margin-left: 0.5rem;
     font-size: 2rem;
 }
+
+
+

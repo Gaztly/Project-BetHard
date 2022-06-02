@@ -1,0 +1,15 @@
+.desktop-navbar-buttons {
+}
+
+.desktop-navbar-buttons-container {
+    position: relative;
+    display: flex;
+    padding: 60px;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 599px) {
+    .desktop-navbar-container {
+        display: none;
+    }
+}

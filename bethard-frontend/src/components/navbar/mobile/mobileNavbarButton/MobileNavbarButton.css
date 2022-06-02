@@ -1,6 +1,3 @@
-:root {
-    --primary: #fff;
-}
 
 .mobile-navbar-btn {
     padding: 8px 20px;
@@ -11,16 +8,16 @@
 }
 
 .mobile-navbar-btn--primary {
-    background-color: var(--primary);
+    background-color: var(--MobileNavbarButton);
     color: #242424;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--MobileNavbarButton);
 }
 
 .mobile-navbar-btn--outline {
     background-color: transparent;
     color: #fff;
     padding: 8px 20px;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--MobileNavbarButton);
     transition: all 0.3s ease-out;
 }
 

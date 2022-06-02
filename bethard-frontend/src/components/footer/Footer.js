@@ -4,7 +4,14 @@ import "./Footer.css"
 
 function Footer() {
   return (
-    <div id="div">Footer</div>
+    <section className="footer">
+
+    <div className="footer-container">
+      <div classname="footer-content">BetHard™ </div>
+      
+      <div classname="footer-content">About </div>
+    </div>
+    </section>
   )
 }
 

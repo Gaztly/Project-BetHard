@@ -14,17 +14,16 @@ function LoginModal() {
 
     const [user, setUser] = useContext(UserContext);
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault();
         const userObject = await login(username, password);
 
         if (userObject.status !== 200) {
-            console.log("No user");
             setErrorMessage(userObject.data);
             return;
         }
 
         setUser(userObject.data);
-        console.log("test");
         localStorage.setItem(
             LocalStorage.user,
             JSON.stringify(userObject.data)
@@ -36,26 +35,31 @@ function LoginModal() {
     return (
         <div id="login-modal-container">
             <div id="login-modal-window">
-                <div id="login-modal-input-container">
-                    <div className="login-modal-warning-text">
-                        {errorMessage}
+                <div className="login-modal-warning-text">{errorMessage}</div>
+                <form class="login-modal-form" onSubmit={(e) => submit(e)}>
+                    <div id="login-modal-input-container">
+                        <input
+                            className="login-modal-input"
+                            type="text"
+                            placeholder="Username or Email"
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+
+                        <input
+                            className="login-modal-input"
+                            type="password"
+                            placeholder="Password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
                     </div>
-                    <input
-                        className="login-modal-input"
-                        type="text"
-                        placeholder="username"
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <input
-                        className="login-modal-input"
-                        type="text"
-                        placeholder="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <button className="login-modal-button" onClick={() => submit()}>
-                    ENTER
-                </button>
+                    <div className="login-modal-button-container">
+                        <button className="login-modal-button" type="submit">
+                            LOG IN
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

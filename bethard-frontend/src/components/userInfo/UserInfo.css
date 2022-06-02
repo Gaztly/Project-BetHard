@@ -1,6 +1,7 @@
 #user-info-container {
     flex-basis: 100%;
-    text-align: right;
+    text-align: center;
+    flex-wrap: wrap;
 }
 
 #user-info-background {
@@ -8,7 +9,11 @@
     margin: 0.8rem auto;
     padding: 0.3rem 1rem;
 
-    background-color: rgb(117, 223, 117);
+    background: linear-gradient(
+        315deg,
+        var(--clr-GradientStart),
+        var(--clr-GradientEnd)
+    );
     outline: 1px black solid;
     border-radius: 5px;
 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { MobileNavbarButton } from "../mobileNavbarButton/MobileNavbarButton";
 import "./MobileNavbar.css";
 import RoutingPath from "../../../../Routes/RoutingPath";
 
@@ -23,7 +22,7 @@ function MobileNavbar({ click, setClick }) {
     window.addEventListener("resize", showButton);
 
     return (
-        <>
+        <div className="navbar-mobile-container">
             <div className="menu-icon" onClick={handleClick}>
                 <i className={click ? "fas fa-times" : "fas fa-bars"} />
             </div>
@@ -56,7 +55,7 @@ function MobileNavbar({ click, setClick }) {
                     </Link>
                 </li>
             </ul>
-        </>
+        </div>
     );
 }
 

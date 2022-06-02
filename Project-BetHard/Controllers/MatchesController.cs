@@ -217,7 +217,7 @@ namespace Project_BetHard.Controllers
         /// </summary>
 
         //Get all matches, with IDs assigned to the odds, scores, halftimes and fulltimes objects
-        public async Task<List<Match>> GetMatchesWithIDs()
+        private async Task<List<Match>> GetMatchesWithIDs()
         {
             var odds = await _context.Odds.ToListAsync();
             var score = await _context.Scores.Include(x => x.FullTime).Include(x => x.HalfTime).ToListAsync();
@@ -237,12 +237,20 @@ namespace Project_BetHard.Controllers
 
                 match.Score.FullTime.MatchId = match.Id;
                 match.Score.FullTime.Id = score.First(x => x.MatchId == match.Id).FullTime.Id;
+
+                //Add random odds WIP
+                double maxOdds = 6;
+                double minOdds = 1.15;
+                Random rand = new Random();
+                match.Odds.One = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
+                match.Odds.Cross = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
+                match.Odds.Two = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
             }
             return matches;
         }
 
         //Check if an update is needed
-        public async Task<bool> CheckIfUpdate()
+        private async Task<bool> CheckIfUpdate()
         {
             var lastUpdate = await _context.UpdateHistories.OrderBy(x => x.Id).LastOrDefaultAsync();        //Fetch latest update from database
             return lastUpdate == null || lastUpdate.LastUpdate < DateTime.UtcNow.AddMinutes(-10);           //Check if last update is more than 10 minutes ago

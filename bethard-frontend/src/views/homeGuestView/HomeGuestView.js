@@ -5,11 +5,11 @@ import HomeRegisterButton from "../../components/home-page/homeRegisterButton/Ho
 import "./HomeGuestView.css";
 import LoginModal from "../../components/loginModal/LoginModal";
 import { MatchContent } from "../../components/home-page/matchContent/MatchContent";
+
 function HomeGuestView() {
   return (
     <div id="home-guest-container">
       <div id="home-guest-background-image">
-        <LoginModal />
         <MatchContent />
         <HomeLogo />
         <HomeBlurb />
@@ -17,6 +17,5 @@ function HomeGuestView() {
       </div>
     </div>
   );
-}
 
 export default HomeGuestView;
