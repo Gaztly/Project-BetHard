@@ -21,19 +21,17 @@ namespace Project_BetHard.Models
         public int Id { get; set; }
 
         public DateTime? UtcDate { get; set; }
-        public string?  Status    { get; set; }
+        public string? Status { get; set; }
 
         [ForeignKey("HomeTeamId")]
         public Team HomeTeam { get; set; }
 
         [ForeignKey("AwayTeamId")]
         public Team AwayTeam { get; set; }
-       
+
+        [ForeignKey("ScoreId")]
         public Score Score { get; set; }
 
         public Odds Odds { get; set; }
-
-
-
     }
 }
