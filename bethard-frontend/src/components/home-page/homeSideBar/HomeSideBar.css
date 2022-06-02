@@ -2,9 +2,9 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    background-color: black;
+    background-color: rgb(35, 34, 34);
     border-right: 1px solid white;
-    box-shadow: -5px 0px 20px 0px rgba(255, 255, 255, 0.4) inset;
+    /* box-shadow: -5px 0px 20px 0px rgba(255, 255, 255, 0.4) inset; */
 
     color: white;
     padding: 2rem 0;

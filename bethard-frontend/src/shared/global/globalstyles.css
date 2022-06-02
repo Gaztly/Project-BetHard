@@ -1,0 +1,12 @@
+:root {
+    --clr-primary: #4fc1fa;
+    --clr-primary-dark: #045c88;
+    --clr-secondary: white;
+    --clr-secondary-dark: #333;
+    --clr-accent: red;
+    --clr-accent-dark: #971010;
+    --clr-box-shadow-color: rgba(255, 255, 255, 0.3);
+    --clr-MobileNavbarButton: #fff;
+    --clr-GradientStart:  rgb(172, 240, 172) 0%;
+    --clr-GradientEnd:  rgb(1, 152, 69) 100%;
+  }
