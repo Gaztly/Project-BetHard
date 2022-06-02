@@ -1,4 +1,19 @@
 #login-modal-container {
+    position: absolute;
+    top: 80px;
+    right: 0px;
+    animation: fadeInAnimation 0.5s ease-in;
+    transition: height 2s;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+        right: -200px;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 #login-modal-window {
@@ -7,7 +22,7 @@
     padding: 1rem;
     max-width: 400px;
     max-height: 250px;
-    background-color: lightcoral;
+    background-color: green;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,21 +37,31 @@
     width: 100%;
 }
 
+.login-modal-form {
+}
+
 .login-modal-warning-text {
     color: red;
+    /* height: 30px; */
 }
 
 .login-modal-input {
     margin: 5px;
-    height: 25px;
+    padding: 5px;
 }
 
 .login-modal-input:focus {
     outline: 1px black solid;
 }
 
+.login-modal-button-container {
+    display: flex;
+    justify-content: center;
+}
+
 .login-modal-button {
     margin-top: 10px;
-    width: 90px;
-    height: 30px;
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: bold;
 }

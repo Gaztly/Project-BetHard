@@ -6,17 +6,16 @@
     );
     height: 80px;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     font-size: 1.2rem;
     position: sticky;
     top: 0;
-    z-index: 999;
 }
 
 .navbar-container {
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     height: 80px;
     max-width: 1500px;

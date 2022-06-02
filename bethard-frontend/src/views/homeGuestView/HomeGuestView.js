@@ -9,7 +9,6 @@ function HomeGuestView() {
     return (
         <div id="home-guest-container">
             <div id="home-guest-background-image">
-                <LoginModal />
                 <HomeLogo />
                 <HomeBlurb />
                 <HomeRegisterButton />
