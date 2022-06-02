@@ -4,63 +4,71 @@ import register from "../../../shared/api/services/register-service";
 import video from "../videos/balls.mp4";
 
 function RegisterField() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthday, setBirtday] = useState(Date.now);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [birthday, setBirtday] = useState(Date.now);
 
-  const submit = () => {
-    register({
-      username: username,
-      password: password,
-      email: email,
-      birthday: birthday,
-    });
-  };
-  return (
-    <>
-      <div id="billboard">
-        <h1 id="regtext">Register</h1>
+    const submit = (e) => {
+        e.preventDefault();
 
-        <input
-          id="reginput"
-          type="text"
-          placeholder="username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <i class="fa-solid fa-user"></i>
-        <br />
-        <input
-          id="reginput"
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <i class="fa-solid fa-key"></i>
-        <br />
+        register({
+            username: username,
+            password: password,
+            email: email,
+            birthday: birthday,
+        });
+    };
+    return (
+        <>
+            <div id="billboard">
+                <h1 id="regtext">Register</h1>
+                <form onSubmit={(e) => submit(e)}>
+                    <div className="reginput-container">
+                        <input
+                            id="username"
+                            className="reginput"
+                            type="text"
+                            placeholder="username"
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div className="reginput-container">
+                        <input
+                            id="password"
+                            className="reginput"
+                            type="password"
+                            placeholder="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
 
-        <input
-          id="reginput"
-          type="email"
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <i class="fa-solid fa-envelope"></i>
-        <br />
-        <input
-          id="reginput"
-          type="date"
-          onChange={(e) => setBirtday(e.target.value)}
-        />
-        <br />
-        <button id="btn" onClick={() => submit()}>
-          SUBMIT
-        </button>
-      </div>
-      <video src={video} id="videos" autoPlay loop muted></video>
-      {/* <div id="imgleft"></div> */}
-    </>
-  );
+                    <div className="reginput-container">
+                        <input
+                            id="email"
+                            className="reginput"
+                            type="email"
+                            placeholder="email"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="reginput-container">
+                        <input
+                            id="birthday"
+                            className="reginput"
+                            type="date"
+                            onChange={(e) => setBirtday(e.target.value)}
+                        />
+                    </div>
+                    <button className="btn" onClick={() => submit()}>
+                        SUBMIT
+                    </button>
+                </form>
+            </div>
+            <video src={video} id="videos" autoPlay loop muted></video>
+            {/* <div id="imgleft"></div> */}
+        </>
+    );
 }
 
 export default RegisterField;
