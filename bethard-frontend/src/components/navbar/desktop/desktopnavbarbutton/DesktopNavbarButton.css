@@ -1,0 +1,17 @@
+.desktop-navbar-button {
+    color: white;
+    background-color: green;
+    border: 1px black solid;
+    border-radius: 5px;
+    margin: 25px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.desktop-navbar-button:hover {
+    opacity: 0.8;
+}
+
+.desktop-navbar-button:active {
+    opacity: 0.6;
+}
