@@ -1,0 +1,13 @@
+.info-box {
+  overflow-y: scroll;
+  height: 15vh;
+  width: 75vh;
+}
+
+#match-title {
+  color: white;
+  display: block;
+  position: absolute;
+  border-bottom: 3px solid black;
+  transform: translateX(0em) translateY(-2em);
+}
