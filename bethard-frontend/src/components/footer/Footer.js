@@ -7,9 +7,7 @@ function Footer() {
     <section className="footer">
 
     <div className="footer-container">
-      <div classname="footer-content">BetHard™ </div>
-      
-      <div classname="footer-content">About </div>
+      <p classname="footer-content">BetHard™ </p>
     </div>
     </section>
   )
