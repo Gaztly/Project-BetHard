@@ -237,6 +237,14 @@ namespace Project_BetHard.Controllers
 
                 match.Score.FullTime.MatchId = match.Id;
                 match.Score.FullTime.Id = score.First(x => x.MatchId == match.Id).FullTime.Id;
+
+                //Add random odds WIP
+                double maxOdds = 6;
+                double minOdds = 1.15;
+                Random rand = new Random();
+                match.Odds.One = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
+                match.Odds.Cross = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
+                match.Odds.Two = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
             }
             return matches;
         }
