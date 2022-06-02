@@ -3,7 +3,6 @@ import HomeLogo from "../../components/home-page/homeLogo/HomeLogo";
 import HomeBlurb from "../../components/home-page/homeBlurb/HomeBlurb";
 import HomeRegisterButton from "../../components/home-page/homeRegisterButton/HomeRegisterButton";
 import "./HomeGuestView.css";
-import LoginModal from "../../components/loginModal/LoginModal";
 
 function HomeGuestView() {
     return (

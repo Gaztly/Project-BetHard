@@ -19,13 +19,11 @@ function LoginModal() {
         const userObject = await login(username, password);
 
         if (userObject.status !== 200) {
-            console.log("No user");
             setErrorMessage(userObject.data);
             return;
         }
 
         setUser(userObject.data);
-        console.log("test");
         localStorage.setItem(
             LocalStorage.user,
             JSON.stringify(userObject.data)

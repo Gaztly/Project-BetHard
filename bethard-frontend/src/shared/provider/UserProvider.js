@@ -6,13 +6,16 @@ const UserContext = createContext(null);
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
+    const getUserFromStorage = () => {
         if (user === null) {
             if (localStorage.getItem(LocalStorage.user)) {
-                console.log("Fetched user from storage");
                 setUser(JSON.parse(localStorage.getItem(LocalStorage.user)));
             }
         }
+    };
+
+    useEffect(() => {
+        getUserFromStorage();
     }, []);
 
     return (

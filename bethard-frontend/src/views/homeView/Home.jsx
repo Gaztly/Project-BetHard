@@ -9,19 +9,21 @@ function Home() {
     const [user, setUser] = useContext(UserContext);
 
     //Check if login is still valid
-    const validateLogin = () => {
-        var response = validateUser(user);
-        if (response.data !== 200) {
+    const validateLogin = async () => {
+        if (user === null) return;
+        var response = await validateUser(user);
+        console.log(response);
+        if (response.status === 204) return; //No content betyder att UserProvider inte hunnit ladda än
+        if (response.status !== 200) {
             setUser(null);
             localStorage.removeItem(LocalStorage.user);
         }
     };
 
     useEffect(() => {
-        if (user !== null) validateLogin();
+        validateLogin();
     }, []);
 
-    // setUser({ dummy: "yes" });
     return <>{user !== null ? <HomeLoggedInView /> : <HomeGuestView />}</>;
 }
 
