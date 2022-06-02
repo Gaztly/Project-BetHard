@@ -1,0 +1,9 @@
+#matchcard-container {
+  font-size: small;
+  columns: 1fr;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  color: white;
+  text-shadow: 3px 2px black;
+}
