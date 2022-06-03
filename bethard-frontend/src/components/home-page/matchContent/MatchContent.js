@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../../../shared/api/services/findMatches-service";
 import { MatchCard } from "./matchcard/MatchCard";
-import Spinner from "react-bootstrap/Spinner";
 import "./MatchContent.css";
 
 export const MatchContent = () => {
@@ -39,7 +38,7 @@ export const MatchContent = () => {
       </div>
     ) : (
       <span>
-        <Spinner></Spinner>
+        
         <div>Loading....</div>
       </span>
     );
@@ -56,7 +55,7 @@ export const MatchContent = () => {
       </div>
     ) : (
       <span>
-        <Spinner></Spinner>
+      
         <div>Loading....</div>
       </span>
     );
