@@ -40,6 +40,7 @@ export const MatchContent = () => {
     ) : (
       <span>
         <Loader />
+
       </span>
     );
   };
