@@ -26,8 +26,8 @@ export const MatchCard = ({ index, match }) => {
         <h3> Odds &nbsp; </h3>
 
         <p>
-          1: {match.odds?.one} &nbsp; X: {match.odds?.cross} &nbsp; 2:{" "}
-          {match.odds?.two}
+          1: {match.odds?.one} &nbsp; X: {match?.odds?.cross} &nbsp; 2:{" "}
+          {match?.odds?.two}
         </p>
       </section>
 

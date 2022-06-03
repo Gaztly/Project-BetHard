@@ -1,4 +1,6 @@
-﻿namespace Project_BetHard.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Project_BetHard.Models
 {
     public class Odds
 
@@ -9,6 +11,7 @@
 
         public double One { get; set; }
 
+        [Column("X")]
         public double Cross { get; set; }
 
         public double Two { get; set; }

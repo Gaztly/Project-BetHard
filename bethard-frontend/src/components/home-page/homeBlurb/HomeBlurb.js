@@ -1,6 +1,5 @@
 import React from "react";
 import "./HomeBlurb.css";
-
 function HomeBlurb() {
   return (
     <div id="home-blurb-container">
