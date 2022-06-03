@@ -1,0 +1,110 @@
+.bet-modal-wrapper {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    animation: fadeInAnimation 0.3s;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.bet-modal {
+    background: linear-gradient(45deg, green, rgb(72, 214, 72));
+    max-width: 500px;
+    max-height: 400px;
+    padding: 1%;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+
+.bet-modal-form {
+    margin: 10px;
+}
+
+.bet-modal-label {
+    margin-bottom: 10px;
+}
+
+.bet-modal-amount-input {
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.bet-modal-radio-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.bet-modal-radio-container label {
+    border-radius: 5px;
+}
+
+.bet-modal-radio-header {
+    flex-basis: 100%;
+    width: 100%;
+}
+
+.bet-modal-btn {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 1.2rem;
+    width: 100px;
+    color: white;
+    background-color: darkgreen;
+    border: 1px black solid;
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.bet-modal-btn:hover {
+    opacity: 0.8;
+}
+
+.bet-modal-btn:active {
+    opacity: 0.6;
+}
+
+.bet-modal-close-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bet-modal-close {
+    display: flex;
+    margin-top: 20px;
+    padding: 5px 10px;
+    background-color: red;
+    border-radius: 45%;
+    cursor: pointer;
+}
+
+.bet-modal-close:hover {
+    opacity: 0.8;
+}
+
+.bet-modal-close:active {
+    opacity: 0.6;
+}
+
+.bet-modal-cross {
+    width: 15px;
+}

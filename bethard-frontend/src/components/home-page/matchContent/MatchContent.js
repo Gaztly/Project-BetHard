@@ -59,16 +59,16 @@ export const MatchContent = () => {
     );
   };
 
-  useEffect(() => {
-    {
-      findMatches();
-    }
-  }, []);
+    useEffect(() => {
+        {
+            findMatches();
+        }
+    }, []);
 
-  return (
-    <main id="match-box-style">
-      <section id="matchinfo">{playedMatches()}</section>
-      <section id="matchinfo">{comingMatches()}</section>
-    </main>
-  );
+    return (
+        <main id="match-box-style">
+            <section id="matchinfo">{playedMatches()}</section>
+            <section id="matchinfo">{comingMatches()}</section>
+        </main>
+    );
 };
