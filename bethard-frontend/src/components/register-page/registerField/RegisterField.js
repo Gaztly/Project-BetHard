@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./RegisterField.css";
 import register from "../../../shared/api/services/register-service";
 import video from "../videos/balls.mp4";
 import RoutingPath from "../../../Routes/RoutingPath";
 import { useNavigate } from "react-router-dom";
-import login from "../../../shared/api/services/login-service";
+import { UserContext } from "../../../shared/provider/UserProvider";
+import LocalStorage from "../../../shared/storage/LocalStorage";
+import loginUser from "../../../shared/api/services/login-service";
 
 function RegisterField() {
   const [username, setUsername] = useState("");
@@ -12,17 +14,31 @@ function RegisterField() {
   const [email, setEmail] = useState("");
   const [birthday, setBirtday] = useState(Date.now);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const submit = (e) => {
+  const [user, setUser] = useContext(UserContext);
+
+  const submit = async (e) => {
     e.preventDefault();
 
-    register({
+    const userObject = await register({
       username: username,
       password: password,
       email: email,
       birthday: birthday,
     });
+
+    if (userObject.status !== 200) {
+      setErrorMessage(userObject.data);
+      return alert(errorMessage);
+    }
+    setUser(userObject.data);
+    localStorage.setItem(LocalStorage.user, JSON.stringify(userObject.data));
+
+    loginUser(username, password);
+    navigate(RoutingPath.Home);
   };
+
   return (
     <>
       <div id="billboard">
@@ -70,7 +86,6 @@ function RegisterField() {
         </form>
       </div>
       <video src={video} id="videos" autoPlay loop muted></video>
-      {/* <div id="imgleft"></div> */}
     </>
   );
 }
