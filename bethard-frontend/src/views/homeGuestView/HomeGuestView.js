@@ -16,5 +16,5 @@ function HomeGuestView() {
     </div>
   );
   }
-}
+
 export default HomeGuestView;
