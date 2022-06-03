@@ -56,21 +56,21 @@ export const MatchContent = () => {
       </div>
     ) : (
       <span>
-        <Spinner></Spinner>
         <div>Loading....</div>
       </span>
     );
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    {
+      findMatches();
+    }
+  }, []);
 
   return (
-    <main>
-      <h1>Latest mateches</h1>
-      <button onClick={() => findMatches()}>Load matches</button>
-
-      <section>{playedMatches()}</section>
-      <section>{comingMatches()}</section>
+    <main id="match-box-style">
+      <section id="matchinfo">{playedMatches()}</section>
+      <section id="matchinfo">{comingMatches()}</section>
     </main>
   );
 };
