@@ -75,7 +75,7 @@ namespace Project_BetHard.Controllers
 
             if (!Util.Token.ValidateToken(input.Token, user)) return Unauthorized("Invalid or expired login.");
 
-            return Ok(input);
+            return Ok(user);
         }
 
         // GET: api/User

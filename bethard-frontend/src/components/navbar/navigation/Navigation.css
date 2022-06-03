@@ -9,7 +9,6 @@
     justify-content: right;
     align-items: center;
     font-size: 1.2rem;
-    position: sticky;
     top: 0;
 }
 
@@ -47,6 +46,3 @@
     margin-left: 0.5rem;
     font-size: 2rem;
 }
-
-
-
