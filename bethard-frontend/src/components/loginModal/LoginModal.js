@@ -7,62 +7,59 @@ import LocalStorage from "../../shared/storage/LocalStorage";
 import RoutingPath from "../../Routes/RoutingPath";
 
 function LoginModal() {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-    const [user, setUser] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
-    const submit = async (e) => {
-        e.preventDefault();
-        const userObject = await login(username, password);
+  const submit = async (e) => {
+    e.preventDefault();
+    const userObject = await login(username, password);
 
-        if (userObject.status !== 200) {
-            setErrorMessage(userObject.data);
-            return;
-        }
+    if (userObject.status !== 200) {
+      setErrorMessage(userObject.data);
+      return;
+    }
 
-        setUser(userObject.data);
-        localStorage.setItem(
-            LocalStorage.user,
-            JSON.stringify(userObject.data)
-        );
+    setUser(userObject.data);
+    localStorage.setItem(LocalStorage.user, JSON.stringify(userObject.data));
 
-        navigate(RoutingPath.Home);
-    };
+    navigate(RoutingPath.Home);
+  };
 
-    return (
-        <div id="login-modal-container">
-            <div id="login-modal-window">
-                <div className="login-modal-warning-text">{errorMessage}</div>
-                <form class="login-modal-form" onSubmit={(e) => submit(e)}>
-                    <div id="login-modal-input-container">
-                        <input
-                            className="login-modal-input"
-                            type="text"
-                            placeholder="Username or Email"
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
+  return (
+    <div id="login-modal-container">
+      <div id="login-modal-window">
+        <div className="login-modal-warning-text">{errorMessage}</div>
+        <form class="login-modal-form" onSubmit={(e) => submit(e)}>
+          <div id="login-modal-input-container">
+            <input
+              className="login-modal-input"
+              type="text"
+              placeholder="Username or Email"
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
 
-                        <input
-                            className="login-modal-input"
-                            type="password"
-                            placeholder="Password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="login-modal-button-container">
-                        <button className="login-modal-button" type="submit">
-                            LOG IN
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
+            <input
+              className="login-modal-input"
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="login-modal-button-container">
+            <button className="login-modal-button" type="submit">
+              LOG IN
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default LoginModal;
