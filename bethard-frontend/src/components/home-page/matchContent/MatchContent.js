@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../../../shared/api/services/findMatches-service";
 import { MatchCard } from "./matchcard/MatchCard";
 import "./MatchContent.css";
+import { Loader } from "../../../shared/loader/Loader";
 
 export const MatchContent = () => {
   const [matches, setMatches] = useState();
@@ -38,7 +39,7 @@ export const MatchContent = () => {
       </div>
     ) : (
       <span>
-        <div>Loading....</div>
+        <Loader />
       </span>
     );
   };
@@ -54,7 +55,7 @@ export const MatchContent = () => {
       </div>
     ) : (
       <span>
-        <div>Loading....</div>
+        <Loader />
       </span>
     );
   };
