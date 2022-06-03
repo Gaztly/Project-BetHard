@@ -5,12 +5,12 @@ import HomeSideBar from "../../components/home-page/homeSideBar/HomeSideBar";
 import "./HomeLoggedInView.css";
 
 function HomeLoggedInView() {
-    return (
-        <div id="home-logged-in-container">
-            <HomeSideBar />
-            <HomeMainContent />
-        </div>
-    );
+  return (
+    <div id="home-logged-in-container">
+      <HomeSideBar />
+      <HomeMainContent />
+    </div>
+  );
 }
 
 export default HomeLoggedInView;

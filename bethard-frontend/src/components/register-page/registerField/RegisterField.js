@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import "./RegisterField.css";
 import register from "../../../shared/api/services/register-service";
 import video from "../videos/balls.mp4";
+import RoutingPath from "../../../Routes/RoutingPath";
+import { useNavigate } from "react-router-dom";
+import login from "../../../shared/api/services/login-service";
 
 function RegisterField() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [birthday, setBirtday] = useState(Date.now);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthday, setBirtday] = useState(Date.now);
+  const navigate = useNavigate();
 
     const submit = (e) => {
         e.preventDefault();
