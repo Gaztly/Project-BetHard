@@ -19,7 +19,7 @@ function AddBetModal({ match, setBetModal }) {
         const response = await addBet.addBetForUser(user, {
             betAmount: betAmount,
             matchId: match.id,
-            oddsWhenBetMade:
+            oddsWhenBetsMade:
                 radioValue === "1"
                     ? match.odds.one
                     : radioValue === "X"
