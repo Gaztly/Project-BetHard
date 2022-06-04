@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project_BetHard.Models;
+using Project_BetHard.Models.Matches;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Project_BetHard.Database
 
         public DbSet<Wallet> Wallets { get; set; }
 
-        public DbSet<Models.Match> Matches { get; set; }
+        public DbSet<Match> Matches { get; set; }
 
         public DbSet<Area> Areas { get; set; }
 

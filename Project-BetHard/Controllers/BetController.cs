@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_BetHard.Database;
-using Project_BetHard.Models;
+using Project_BetHard.Models.Matches;
+using Project_BetHard.Models.UtilModels;
 
 namespace Project_BetHard.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace Project_BetHard.Models
+﻿namespace Project_BetHard.Models.Matches
 {
     public class Score
     {
@@ -6,9 +6,9 @@
 
         public int MatchId { get; set; }
 
-        public string? Winner { get; set; }
+        public string Winner { get; set; }
 
-        public string? Duration { get; set; }
+        public string Duration { get; set; }
 
         public ScoreTime FullTime { get; set; }
 

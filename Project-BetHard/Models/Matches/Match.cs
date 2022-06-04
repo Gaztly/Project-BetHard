@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project_BetHard.Models
+namespace Project_BetHard.Models.Matches
 {
     public class Match
     {
@@ -21,7 +21,7 @@ namespace Project_BetHard.Models
         public int Id { get; set; }
 
         public DateTime? UtcDate { get; set; }
-        public string? Status { get; set; }
+        public string Status { get; set; }
 
         [ForeignKey("HomeTeamId")]
         public Team HomeTeam { get; set; }

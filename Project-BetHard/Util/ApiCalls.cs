@@ -1,6 +1,7 @@
 ﻿using dotenv.net;
 using Newtonsoft.Json;
-using Project_BetHard.Models;
+using Project_BetHard.Models.Matches;
+using Project_BetHard.Models.UtilModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

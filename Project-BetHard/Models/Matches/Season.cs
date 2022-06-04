@@ -2,12 +2,12 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Project_BetHard.Models
+namespace Project_BetHard.Models.Matches
 {
     public class Season
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id   { get; set; }
+        public int Id { get; set; }
 
         public DateTime? StartDate { get; set; }
 
@@ -15,9 +15,9 @@ namespace Project_BetHard.Models
 
 
         [JsonProperty("currentMatchday")]
-        public string? MatchRound { get; set; }
+        public string MatchRound { get; set; }
 
-        public string? Winner { get; set; }
+        public string Winner { get; set; }
 
 
 

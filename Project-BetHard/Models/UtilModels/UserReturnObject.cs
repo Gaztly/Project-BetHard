@@ -2,7 +2,7 @@
 using System;
 using System.Text;
 
-namespace Project_BetHard.Models
+namespace Project_BetHard.Models.UtilModels
 {
     public class UserReturnObject
     {
@@ -13,17 +13,17 @@ namespace Project_BetHard.Models
 
         public UserReturnObject(User user)
         {
-            this.Username = user.Username;
-            this.Wallet = user.Wallet;
-            this.Token = Util.Token.GetToken(user);
+            Username = user.Username;
+            Wallet = user.Wallet;
+            Token = Util.Token.GetToken(user);
         }
 
         public UserReturnObject(User user, DateTime expiration)
         {
-            this.Username = user.Username;
-            this.Wallet = user.Wallet;
-            this.Token = Util.Token.GetToken(user);
-            this.Expiration = expiration;
+            Username = user.Username;
+            Wallet = user.Wallet;
+            Token = Util.Token.GetToken(user);
+            Expiration = expiration;
         }
 
         public UserReturnObject()

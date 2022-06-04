@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project_BetHard.Models
+namespace Project_BetHard.Models.Matches
 {
     public class Bet
     {
@@ -13,7 +13,6 @@ namespace Project_BetHard.Models
         public DateTime TimePlaced { get; set; } = DateTime.Now;
         public bool PaidOut { get; set; } = false;
 
-        
         [ForeignKey("UserId")]
         public User User { get; set; }
 
@@ -28,9 +27,5 @@ namespace Project_BetHard.Models
 
         [Required]
         public char BetTeam { get; set; }
-
-
-
-
     }
 }
