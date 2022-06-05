@@ -36,6 +36,11 @@
 .matchcard-scorecard-header {
     flex-basis: 100%;
     font-size: 1.2rem;
+    color: green;
+}
+
+.scorecard-header-white {
+    color: white;
 }
 
 .matchcard-score {
