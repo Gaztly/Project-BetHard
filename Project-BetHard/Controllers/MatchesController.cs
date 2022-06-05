@@ -72,7 +72,7 @@ namespace Project_BetHard.Controllers
                 matches = await GetMatchesWithIDs();
                 for (int i = 0; i < matches.Count; i++)
                 {
-                    if (matches[i].UtcDate > DateTime.UtcNow.AddDays(14) || matches[i].UtcDate > DateTime.UtcNow.AddDays(-14))
+                    if (matches[i].UtcDate > DateTime.UtcNow.AddDays(14) || matches[i].UtcDate < DateTime.UtcNow.AddDays(-14))
                     {
                         matches.RemoveAt(i);
                         continue;
@@ -216,7 +216,7 @@ namespace Project_BetHard.Controllers
 
         [Route("getmatchesbyids")]
         [HttpPost]
-        public async Task<IActionResult> GetMatchesBydIDs([FromBody] BetMatchIds input)
+        public async Task<IActionResult> GetMatchesByIDs([FromBody] BetMatchIds input)
         {
             if (input.MatchIds.Length == 0) return BadRequest("No IDs in array.");
 
