@@ -109,6 +109,10 @@ namespace Project_BetHard.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMatchById(int id)
         {
+
+            //Hämta betmatchIDs från front end.
+
+
             var match = await _context.Matches
                     .Include(m => m.Area)
                     .Include(m => m.Season)
@@ -216,8 +220,9 @@ namespace Project_BetHard.Controllers
 
         [Route("getmatchesbyids")]
         [HttpPost]
-        public async Task<IActionResult> GetMatchesBydIDs([FromBody] BetMatchIds input)
+        public async Task<IActionResult> GetMatchesByIDs([FromBody] BetMatchIds input)
         {
+            if (input.MatchIds == null) return BadRequest("No array found");
             if (input.MatchIds.Length == 0) return BadRequest("No IDs in array.");
 
             var matches = await _context.Matches

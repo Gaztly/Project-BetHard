@@ -35,6 +35,8 @@ namespace Project_BetHard.Controllers
         [HttpPost]
         public async Task<ActionResult<Bet>> GetBetsForUser([FromBody] UserReturnObject input)
         {
+             //BetMatchIds.
+
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == input.Username);  //Get user from username
 
             if (user == null) return NotFound("Invalid user.");                     //Check if null
@@ -43,6 +45,8 @@ namespace Project_BetHard.Controllers
 
             var bets = await _context.Bets.Include(b => b.User).ToListAsync();           //Get all bets
             bets = bets.FindAll(x => x.User.Id == user.Id);         //sort bets by user id
+
+            //var matchesBet = _context.Matches.Include(c=> c.Id == )
 
             if (bets == null) return NotFound();                // no bets found
 
