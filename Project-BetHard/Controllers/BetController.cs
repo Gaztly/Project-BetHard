@@ -80,56 +80,27 @@ namespace Project_BetHard.Controllers
             return Ok(bet);
         }
 
-        // PUT: api/Bet/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBet(int id, Bet bet)
+        // POST: api/Bet/deletebet
+        [Route("deletebet")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteBet([FromBody] BetInput input)
         {
-            if (id != bet.Id)
-            {
-                return BadRequest();
-            }
+            var match = await _context.Matches.FirstOrDefaultAsync(m => m.Id == input.Bet.MatchId);     //Hämtar matchen
 
-            _context.Entry(bet).State = EntityState.Modified;
+            if (match == null) return NotFound("Match not found.");         //kollar så matchen finns
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BetExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            if (match.UtcDate < DateTime.UtcNow) return BadRequest("Match has already started. Cannot remove bet.");
 
-            return NoContent();
-        }
-
-        // DELETE: api/Bet/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBet(int id)
-        {
-            var bet = await _context.Bets.FindAsync(id);
+            var bet = await _context.Bets.FindAsync(input.Bet.Id);          //kolla så betet finns
             if (bet == null)
             {
-                return NotFound();
+                return NotFound("Bet could not be found.");
             }
 
-            _context.Bets.Remove(bet);
+            _context.Bets.Remove(bet);          //Ta bort från databasen
             await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
-
-        private bool BetExists(int id)
-        {
-            return _context.Bets.Any(e => e.Id == id);
+            return Ok("Bet removed.");
         }
     }
 }
