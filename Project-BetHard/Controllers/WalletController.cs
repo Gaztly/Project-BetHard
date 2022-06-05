@@ -23,6 +23,7 @@ namespace Project_BetHard.Controllers
         }
 
         // POST: api/wallet/getupdatedwallet
+        [Route("getupdatedwallet")]
         [HttpPost]
         public async Task<IActionResult> GetUpdatedWallet([FromBody] UserReturnObject input)
         {
