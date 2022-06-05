@@ -1,9 +1,8 @@
 #match-box-style {
     display: flex;
     justify-content: space-evenly;
-    height: 100vh;
     box-sizing: border-box;
-    padding-bottom: 100px;
+    margin-bottom: 100px;
 }
 
 .matchinfo {
@@ -15,9 +14,11 @@
     overflow-x: hidden;
     height: 700px;
     margin: 25px;
+    margin-top: 0;
     background-color: #1a1a1a;
     opacity: 0.8;
     transition: opacity 0.4s;
+    border-radius: 10px;
 }
 
 #match-title {
@@ -26,9 +27,11 @@
     border-bottom: 3px solid black;
     background-color: grey;
     z-index: 2;
+    border-radius: 10px;
+    margin: 0px 25px;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1500px) {
     #match-box-style {
         display: inline-block;
     }

@@ -1,24 +1,31 @@
-
 import React, { useContext, useState, useEffect } from "react";
 import "./HomeBets.css";
 import API from "../../../../shared/api/services/findBets-service";
 import { UserContext } from "../../../../shared/provider/UserProvider";
 import { Loader } from "../../../../shared/loader/Loader";
-import {BetCard} from "./BetCard/BetCard";
+import { BetCard } from "./BetCard/BetCard";
 function HomeBets() {
-
     //Hämtar Context med hjälp av UserContext. från Userprovider.js, som en referens.
-    const [user, setUser] = useContext(UserContext); 
+    const [user, setUser] = useContext(UserContext);
     const [bets, setBets] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
 
     const AllBets = async () => {
-        setIsLoaded(false)
+        setIsLoaded(false);
         try {
-            const { data } = await API.betsForUser(user);
+            const response = await API.betsForUser(user);
+
+            //error checking, om responsen inte är 200 så är det en error
+            if (response.status !== 200) {
+                setUser(null); //Sätter användaren till null om användarens token är ogiltig
+
+                return;
+            }
+
+            const data = response.data;
             setBets(data);
             setIsLoaded(true);
-            console.log(data)
+            console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -26,50 +33,41 @@ function HomeBets() {
 
     const PlacedBets = () => {
         return isLoaded ? (
-          <div className="info-box">
-            <h2 id="match-title">Placed bets</h2>
-            {bets?.map((bets, index) => {
-              if (bets.paidOut != true) {
-                return <BetCard key={index} bets={bets} />;
-              }
-            })}
-          </div>
+            <div className="info-box">
+                <h2 id="match-title">Placed bets</h2>
+                {bets?.map((bets, index) => {
+                    if (bets.paidOut != true) {
+                        return <BetCard key={index} bets={bets} />;
+                    }
+                })}
+            </div>
         ) : (
-          <span>
-            <Loader />
-    
-          </span>
+            <span>
+                <Loader />
+            </span>
         );
-      };
+    };
 
+    useEffect(() => {
+        {
+            AllBets();
+        }
+    }, []);
 
-
-  useEffect(() => {
-    {
-      AllBets();
-    }
-  }, []);
-
-
-
-return(
-    <main id="match-box-style">
+    return (
+        <main id="match-box-style">
             <section id="matchinfo">{PlacedBets()}</section>
-           
         </main>
-)
-};
+    );
+}
 
 export default HomeBets;
 
-
-
-
 //   return (
-    // <main id="match-box-style">
-    //   <section id="matchinfo">{Allbets()}</section>
+// <main id="match-box-style">
+//   <section id="matchinfo">{Allbets()}</section>
 
-    // </main>
+// </main>
 //   );
 
 //   const Bets = () => {
@@ -84,7 +82,7 @@ export default HomeBets;
 //       </div>
 //     ) : (
 //       <span>
-        
+
 //         <div>Loading....</div>
 //       </span>
 //     );
