@@ -3,6 +3,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project_BetHard.Database;
 using Project_BetHard.Models;
+using Project_BetHard.Models.Matches;
+using Project_BetHard.Models.UtilModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -210,6 +212,28 @@ namespace Project_BetHard.Controllers
                     .ToListAsync();
             }
             return Ok(matches);
+        }
+
+        [Route("getmatchesbyids")]
+        [HttpPost]
+        public async Task<IActionResult> GetMatchesBydIDs([FromBody] BetMatchIds input)
+        {
+            if (input.MatchIds.Length == 0) return BadRequest("No IDs in array.");
+
+            var matches = await _context.Matches
+                                     .Include(m => m.Area)
+                    .Include(m => m.Season)
+                    .Include(m => m.Competition)
+                    .Include(m => m.HomeTeam)
+                    .Include(m => m.AwayTeam)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.HalfTime)
+                    .Include(m => m.Score)
+                    .ThenInclude(s => s.FullTime)
+                    .Include(m => m.Odds)
+                    .ToListAsync();
+
+            return Ok(matches.Where(m => input.MatchIds.Contains(m.Id)).ToList());
         }
 
         /// <summary>

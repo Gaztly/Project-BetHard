@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Project_BetHard.Models
+namespace Project_BetHard.Models.UtilModels
 {
     public class LoginInput
     {
