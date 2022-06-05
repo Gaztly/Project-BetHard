@@ -32,14 +32,16 @@ export const MatchContent = () => {
 
     const playedMatches = () => {
         return isLoaded ? (
-            <div className="info-box">
+            <>
                 <h2 id="match-title">Played Matches</h2>
-                {matches?.map((match, index) => {
-                    if (match.status === "FINISHED") {
-                        return <MatchCard key={index} match={match} />;
-                    }
-                })}
-            </div>
+                <div className="info-box">
+                    {matches?.map((match, index) => {
+                        if (match.status === "FINISHED") {
+                            return <MatchCard key={index} match={match} />;
+                        }
+                    })}
+                </div>
+            </>
         ) : (
             <span>
                 <Loader />
@@ -48,21 +50,23 @@ export const MatchContent = () => {
     };
     const comingMatches = () => {
         return isLoaded ? (
-            <div className="info-box">
+            <>
                 <h2 id="match-title">Coming Matches</h2>
-                {matches?.map((match, index) => {
-                    if (match.status !== "FINISHED") {
-                        return (
-                            <MatchCard
-                                key={index}
-                                match={match}
-                                setModalMatch={setModalMatch}
-                                setBetModal={setBetModal}
-                            />
-                        );
-                    }
-                })}
-            </div>
+                <div className="info-box">
+                    {matches?.map((match, index) => {
+                        if (match.status !== "FINISHED") {
+                            return (
+                                <MatchCard
+                                    key={index}
+                                    match={match}
+                                    setModalMatch={setModalMatch}
+                                    setBetModal={setBetModal}
+                                />
+                            );
+                        }
+                    })}
+                </div>
+            </>
         ) : (
             <span>
                 <Loader />
@@ -82,10 +86,8 @@ export const MatchContent = () => {
     return (
         <main id="match-box-style">
             {betModal && getModal()}
-            <section className="matchinfo">{comingMatches()}</section>
-            <section className="matchinfo matchinfo-bottom">
-                {playedMatches()}
-            </section>
+            <div className="matchinfo">{comingMatches()}</div>
+            <div className="matchinfo matchinfo-bottom">{playedMatches()}</div>
         </main>
     );
 };

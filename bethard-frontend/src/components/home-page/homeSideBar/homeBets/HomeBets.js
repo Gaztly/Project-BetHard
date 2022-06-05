@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect } from "react";
 import "./HomeBets.css";
 import API from "../../../../shared/api/services/findBets-service";
@@ -7,9 +6,8 @@ import { Loader } from "../../../../shared/loader/Loader";
 import {BetCard} from "./BetCard/BetCard";
 
 function HomeBets() {
-
     //Hämtar Context med hjälp av UserContext. från Userprovider.js, som en referens.
-    const [user, setUser] = useContext(UserContext); 
+    const [user, setUser] = useContext(UserContext);
     const [bets, setBets] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
     const [matchData, setMatchData] = useState();
@@ -19,11 +17,20 @@ function HomeBets() {
   
 
     const AllBets = async () => {
-        setIsLoaded(false)
+        setIsLoaded(false);
         try {
-            const { data } = await API.betsForUser(user); //destructuring, await...= response.
             //innehåller data, headers body status osv från http callet.
-            //responsen innehåller json object.
+            //responsen innehåller json object
+            const response = await API.betsForUser(user);
+
+            //error checking, om responsen inte är 200 så är det en error
+            if (response.status !== 200) {
+                setUser(null); //Sätter användaren till null om användarens token är ogiltig
+
+                return;
+            }
+
+            const data = response.data;
             setBets(data);
       
             console.log(bets)
@@ -62,30 +69,24 @@ function HomeBets() {
             })}
           </div>
         ) : (
-          <span>
-            <Loader />
-    
-          </span>
+            <span>
+                <Loader />
+            </span>
         );
-      };
+  }
 
+    useEffect(() => {
+        {
+            AllBets();
+        }
+    }, []);
 
-
-  useEffect(() => {
-    {
-      AllBets();
-    }
-  }, []); 
-
-
-
-return(
-    <main id="match-box-style">
+    return (
+        <main id="match-box-style">
             <section id="matchinfo">{PlacedBets()}</section>
-           
         </main>
-)
-};
+    );
+}
 
 export default HomeBets;
 
@@ -93,12 +94,11 @@ export default HomeBets;
 // en post i users, som skickar data till den. datan du skickar är en array av match ID'en
 //en ny model utan controller, bara array av ints. 
 // _context.matches(include).Where(x=> x.id == match.id )
-
 //   return (
-    // <main id="match-box-style">
-    //   <section id="matchinfo">{Allbets()}</section>
+// <main id="match-box-style">
+//   <section id="matchinfo">{Allbets()}</section>
 
-    // </main>
+// </main>
 //   );
 
 //   const Bets = () => {
@@ -113,7 +113,7 @@ export default HomeBets;
 //       </div>
 //     ) : (
 //       <span>
-        
+
 //         <div>Loading....</div>
 //       </span>
 //     );
