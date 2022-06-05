@@ -10,11 +10,10 @@
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
-    position: absolute; 
+    position: fixed;
     bottom: 0;
-    z-index: 999;
+    z-index: 50;
     width: 100%;
-   
 }
 
 .footer-container {
@@ -25,6 +24,4 @@
     max-width: 1500px;
     text-decoration: none;
     font-size: 0.6rem;
-    
 }
-

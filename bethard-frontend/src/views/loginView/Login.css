@@ -1,10 +1,11 @@
 .login-container {
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
     justify-content: center;
     background-image: url(../../shared//img//home-main-content-background.jpg);
     background-size: cover;
     height: 100vh;
+    color: white;
 }
 
 .login-container-text {
@@ -18,6 +19,7 @@
     color: white;
     background-color: rgba(0, 0, 0, 0.5);
     height: 15vh;
+    border-radius: 15px;
 }
 
 .login-text-big {
@@ -31,8 +33,8 @@
 
 .login-input-container {
     display: grid;
+    grid-template-columns: 1fr;
     justify-content: center;
-    /* position: relative; */
     margin-top: -280px;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 0;
@@ -67,4 +69,13 @@
 
 .login-input-button:active {
     opacity: 0.6;
+}
+
+@media screen and (min-width: 600px) {
+    .login-container-text {
+        background-color: rgba(100, 100, 100, 0.4);
+    }
+    .login-input-container {
+        background-color: rgba(100, 100, 100, 0.4);
+    }
 }

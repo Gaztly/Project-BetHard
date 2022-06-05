@@ -1,37 +1,60 @@
 import { useState } from "react";
 import "./MatchCard.css";
-export const MatchCard = ({ index, match }) => {
-  return (
-    <div id="matchcard-container">
-      <br />
-      <br />
-      <h4>
-        Home: {match?.homeTeam?.name} / Away: {match?.awayTeam?.name}
-      </h4>
-      <br />
-      <h3>Score:</h3>
-      <h4>Halftime&nbsp; |&nbsp; Fulltime</h4>
-      <h4>
-        <br />
-        Home: {match?.score?.halfTime?.home} | {match?.score?.fullTime?.home}
-      </h4>
+export const MatchCard = ({ index, match, setModalMatch, setBetModal }) => {
+    const showModal = () => {
+        setModalMatch(match);
+        setBetModal(true);
+    };
 
-      <h4>
-        Away: {match?.score?.halfTime?.away}&nbsp; |{" "}
-        {match?.score?.fullTime?.away}
-      </h4>
-      <br />
+    return (
+        <>
+            <div id="matchcard-container" onClick={() => showModal()}>
+                <div className="matchcard-team-header">
+                    <img
+                        className="matchcard-team-logo"
+                        src={match.homeTeam.crest}
+                        alt=""
+                    />
+                    {match.homeTeam.name} - {match.awayTeam.name}
+                    <img
+                        className="matchcard-team-logo"
+                        src={match.awayTeam.crest}
+                        alt=""
+                    />
+                </div>
+                <div className="matchcard-scorecard">
+                    {/* <div className="matchcard-scorecard-header">Score</div> */}
+                    <div className="matchcard-score">
+                        <h3 className="matchcard-score-point">
+                            {match.score.fullTime.home} -{" "}
+                            {match.score.halfTime.away}
+                        </h3>
+                    </div>
+                    <div className="matchcard-score">
+                        <h4 className="matchcard-score-point-halftime">
+                            ({match.score.halfTime.home} -{" "}
+                            {match.score.fullTime.away})
+                        </h4>
+                    </div>
+                </div>
 
-      <section className="odds">
-        <h3> Odds &nbsp; </h3>
+                <section className="matchcard-odds">
+                    <div className="matchcard-odds-header">1 / X / 2</div>
 
-        <p>
-          1: {match.odds?.one} &nbsp; X: {match?.odds?.cross} &nbsp; 2:{" "}
-          {match?.odds?.two}
-        </p>
-      </section>
-
-      <hr />
-    </div>
-  );
+                    <div className="matchcard-odds-container">
+                        <span className="matchcard-odds-value">
+                            {match.odds.one}
+                        </span>
+                        <span className="matchcard-odds-value">
+                            {match.odds.cross}
+                        </span>
+                        <span className="matchcard-odds-value">
+                            {match.odds.two}
+                        </span>
+                    </div>
+                </section>
+            </div>
+            <hr />
+        </>
+    );
 };

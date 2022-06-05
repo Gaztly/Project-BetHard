@@ -1,14 +1,43 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./AddBetModal.css";
 import crossMark from "../../shared/img/icons/cross-mark.svg";
+import addBet from "../../shared/api/services/addBet-service";
+import { UserContext } from "../../shared/provider/UserProvider";
+import validateUser from "../../shared/api/services/validate-service";
 
 function AddBetModal({ match, setBetModal }) {
-    const [team, setTeam] = useState("");
+    const [user, setUser] = useContext(UserContext);
+    const [radioValue, setRadioValue] = useState("X");
+    const [betAmount, setBetAmount] = useState();
+    const [errorMessage, setErrorMessage] = useState();
     const modalRef = useRef();
     const crossRef = useRef();
 
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
+
+        const response = await addBet.addBetForUser(user, {
+            betAmount: betAmount,
+            matchId: match.id,
+            oddsWhenBetsMade:
+                radioValue === "1"
+                    ? match.odds.one
+                    : radioValue === "X"
+                    ? match.odds.cross
+                    : match.odds.two,
+            betTeam: radioValue,
+        });
+        if (response.status !== 200) {
+            setErrorMessage(response.data);
+            return;
+        }
+        setBetModal(false);
+        // updateUser();                behöver uppdatera plånboken. walletcontroller?
+    };
+
+    const updateUser = async () => {
+        const newUser = await validateUser(user);
+        setUser(newUser);
     };
 
     const exit = () => {
@@ -20,6 +49,10 @@ function AddBetModal({ match, setBetModal }) {
         setBetModal(false);
     };
 
+    const updateRadioValue = (e) => {
+        setRadioValue(e.target.value);
+    };
+
     useEffect(() => {
         crossRef.current.checked = true;
     }, []);
@@ -27,7 +60,19 @@ function AddBetModal({ match, setBetModal }) {
     return (
         <div className="bet-modal-wrapper" onClick={(e) => clickOutside(e)}>
             <div ref={modalRef} className="bet-modal">
-                BET, HARD
+                <div className="bet-modal-teams">
+                    <img
+                        className="matchcard-team-logo"
+                        src={match.homeTeam.crest}
+                        alt=""
+                    />
+                    {match.homeTeam.name} - {match.awayTeam.name}
+                    <img
+                        className="matchcard-team-logo"
+                        src={match.awayTeam.crest}
+                        alt=""
+                    />
+                </div>
                 <form className="bet-modal-form" onSubmit={(e) => submit(e)}>
                     <div className="bet-modal-input-container">
                         <label className="bet-modal-label" for="betAmount">
@@ -37,8 +82,11 @@ function AddBetModal({ match, setBetModal }) {
                         <input
                             className="bet-modal-amount-input"
                             name="betAmount"
-                            type="text"
+                            type="number"
                             placeholder="Your bet"
+                            required
+                            value={betAmount}
+                            onChange={(e) => setBetAmount(e.target.value)}
                         />
 
                         <div className="bet-modal-radio-container">
@@ -49,10 +97,12 @@ function AddBetModal({ match, setBetModal }) {
                                 </label>
                                 <br />
                                 <input
+                                    className="bet-modal-radio-input"
                                     name="betTeam"
                                     id="betOne"
                                     type="radio"
                                     value="1"
+                                    onChange={(e) => updateRadioValue(e)}
                                 />
                             </div>
 
@@ -64,11 +114,13 @@ function AddBetModal({ match, setBetModal }) {
                                 </label>
                                 <br />
                                 <input
+                                    className="bet-modal-radio-input"
                                     name="betTeam"
                                     id="betX"
                                     type="radio"
                                     value="X"
                                     ref={crossRef}
+                                    onChange={(e) => updateRadioValue(e)}
                                 />
                             </div>
 
@@ -80,13 +132,18 @@ function AddBetModal({ match, setBetModal }) {
                                 </label>
                                 <br />
                                 <input
+                                    className="bet-modal-radio-input"
                                     name="betTeam"
                                     id="betTwo"
                                     type="radio"
                                     value="2"
+                                    onChange={(e) => updateRadioValue(e)}
                                 />
                             </div>
                         </div>
+                        {errorMessage !== "" ? (
+                            <p className="bet-error-message">{errorMessage}</p>
+                        ) : null}
                         <button className="bet-modal-btn">BET!</button>
                         <div className="bet-modal-close-wrapper">
                             <div
