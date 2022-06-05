@@ -34,11 +34,7 @@ namespace Project_BetHard.Controllers
                 matches = await GetMatchesWithIDs();
                 foreach (var match in matches)
                 {
-                    _context.ChangeTracker.Clear();
-                    _context.Attach(match);
-
-                    _context.Matches.Update(match);
-                    await _context.SaveChangesAsync();
+                    await UpdateMatch(match);
                 }
                 await _context.UpdateHistories.AddAsync(new UpdateHistory());
                 await _context.SaveChangesAsync();
@@ -78,10 +74,7 @@ namespace Project_BetHard.Controllers
                         continue;
                     }
 
-                    _context.ChangeTracker.Clear();
-                    _context.Attach(matches[i]);
-                    _context.Matches.Update(matches[i]);
-                    await _context.SaveChangesAsync();
+                    await UpdateMatch(matches[i]);
                 }
                 await _context.UpdateHistories.AddAsync(new UpdateHistory());
                 await _context.SaveChangesAsync();
@@ -143,10 +136,7 @@ namespace Project_BetHard.Controllers
                         continue;
                     }
 
-                    _context.ChangeTracker.Clear();
-                    _context.Attach(matches[i]);
-                    _context.Matches.Update(matches[i]);
-                    await _context.SaveChangesAsync();
+                    await UpdateMatch(matches[i]);
                 }
                 //await _context.UpdateHistories.AddAsync(new UpdateHistory());        //Skriver inte till updatehistory då den bara uppdaterat gångna matcher
                 //await _context.SaveChangesAsync();
@@ -187,10 +177,7 @@ namespace Project_BetHard.Controllers
                         continue;
                     }
 
-                    _context.ChangeTracker.Clear();
-                    _context.Attach(matches[i]);
-                    _context.Matches.Update(matches[i]);
-                    await _context.SaveChangesAsync();
+                    await UpdateMatch(matches[i]);
                 }
                 //await _context.UpdateHistories.AddAsync(new UpdateHistory());        //Skriver inte till updatehistory då den bara uppdaterat gångna matcher
                 //await _context.SaveChangesAsync();
@@ -271,6 +258,18 @@ namespace Project_BetHard.Controllers
                 match.Odds.Two = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
             }
             return matches;
+        }
+
+        //Update all matches sent in and their related entities
+        private async Task UpdateMatch(Match match)
+        {
+            _context.ChangeTracker.Clear();
+            _context.Attach(match);
+            _context.Matches.Update(match);
+            _context.Scores.Update(match.Score);
+            _context.ScoreTimes.UpdateRange(new ScoreTime[] { match.Score.HalfTime, match.Score.FullTime });
+            _context.Odds.Update(match.Odds);
+            await _context.SaveChangesAsync();
         }
 
         //Check if an update is needed
