@@ -38,8 +38,9 @@ function HomeBets() {
             console.log(matchIds)
             //Visar mer utförligt hur den tar emot response från api, och sparar ner i response.
             //och tar datan från responsen  
-            const response = await API.GetMatchById(matchIds);
-            setMatchData(response.data);
+
+            const responsetwo = await API.GetMatchById(matchIds);
+            setMatchData(responsetwo.data);
             console.log(matchData)
             setIsLoaded(true);
         } catch (error) {
