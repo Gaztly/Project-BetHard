@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_BetHard.Database;
+using Project_BetHard.Models;
 using Project_BetHard.Models.Matches;
 using Project_BetHard.Models.UtilModels;
 
@@ -35,20 +36,63 @@ namespace Project_BetHard.Controllers
         [HttpPost]
         public async Task<ActionResult<Bet>> GetBetsForUser([FromBody] UserReturnObject input)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == input.Username);  //Get user from username
+            var user = await _context.Users.Include(u => u.Wallet).FirstOrDefaultAsync(u => u.Username == input.Username);  //Get user from username
 
             if (user == null) return NotFound("Invalid user.");                     //Check if null
-            Debug.WriteLine("user: ", user.Username);
+
             if (!Util.Token.ValidateToken(input.Token, user)) return Unauthorized("Invalid credentials");   //Check if token is valid
 
             var bets = await _context.Bets.Include(b => b.User).ToListAsync();           //Get all bets
             bets = bets.FindAll(x => x.User.Id == user.Id);         //sort bets by user id
+
+            bets = await UpdateBets(bets, user);
 
             if (bets == null) return NotFound();                // no bets found
 
             bets.ForEach(b => b.User = null);
 
             return Ok(bets);
+        }
+
+
+        //UTIL method for updating bets for a user
+        private async Task<List<Bet>> UpdateBets(List<Bet> bets, User user)
+        {
+            foreach (Bet b in bets)
+            {
+                if (b.PaidOut == true) continue;        //if bet is already paid out, then skip this iteration
+
+                var match = await _context.Matches.Include(m => m.Score).FirstOrDefaultAsync(m => m.Id == b.MatchId);      //get match to check result
+                if (match == null) continue;
+
+                //Get resultchar for comparison
+                char result = match.Score.Winner == "HOME_TEAM" ? '1' : match.Score.Winner == "DRAW" ? 'X' : '2';
+
+                //check if bet is won
+                if (b.BetTeam == result)
+                {
+                    await PayOut(b, user);
+                    b.BetWon = true;
+                }
+                else
+                {
+                    b.BetWon = false;
+                }
+                b.PaidOut = true;
+
+                _context.Bets.Update(b);
+                await _context.SaveChangesAsync();
+            }
+
+            return bets;
+        }
+
+        //Pays out the money to the users wallet and updates the wallet
+        private async Task PayOut(Bet bet, User user)
+        {
+            user.Wallet.Balance += bet.BetAmount * bet.OddsWhenBetsMade;
+            _context.Wallets.Update(user.Wallet);
+            await _context.SaveChangesAsync();
         }
 
         // POST: api/Bet

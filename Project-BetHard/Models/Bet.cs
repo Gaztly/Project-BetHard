@@ -27,5 +27,7 @@ namespace Project_BetHard.Models.Matches
 
         [Required]
         public char BetTeam { get; set; }
+
+        public bool? BetWon { get; set; } = null;
     }
 }
