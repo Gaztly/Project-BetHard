@@ -7,7 +7,13 @@ const betsForUser = (user) => {
   });
 };
 
+const GetMatchById = (id) => {
+  return API.post("matches/getmatchesbyids", 
+      {matchIds:id}).catch((error) => {
+    return error.response;
+  });
+};
 
 
 
-export default { betsForUser };
+export default { betsForUser,GetMatchById };
