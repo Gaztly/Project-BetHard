@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../../components/loader/Loader";
 import RoutingPath from "../../Routes/RoutingPath";
 import login from "../../shared/api/services/login-service";
 import { UserContext } from "../../shared/provider/UserProvider";
@@ -12,13 +13,16 @@ function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const [user, setUser] = useContext(UserContext);
 
     const submit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
         const userObject = await login(username, password);
+        setIsLoading(false);
 
         if (userObject.status !== 200) {
             setErrorMessage(userObject.data);
@@ -54,9 +58,13 @@ function Login() {
                         placeholder="password"
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button className="login-input-button" type="submit">
-                        ENTER
-                    </button>
+                    {isLoading ? (
+                        <Loader />
+                    ) : (
+                        <button className="login-input-button" type="submit">
+                            LOG IN
+                        </button>
+                    )}
                     <div style={{ color: "red" }}>{errorMessage}</div>
                 </div>
             </form>

@@ -1,16 +1,43 @@
+export const BetCard = ({ bets, index, match }) => {
+    const Won = () => {
+        if (match.score.winner === null) {
+            return "Pending";
+        }
+        if (match.score.winner == "HOME_TEAM" && bets.betTeam == 1) {
+            return "Won";
+        } else if (match.score.winner == "AWAY_TEAM" && bets.betTeam == 2) {
+            return "Won";
+        } else if (match.score.winner == "DRAW" && bets.betTeam == "X") {
+            return "Won";
+        } else {
+            return "Lost";
+        }
+    };
 
-
-export const BetCard = ({ bets, index }) => {
     return (
-      <div id="matchcard-container">
-        <br />
-        <br />
-        <h4>
-         BetID: {bets.id} 
-        </h4>
-        <br />
-        <hr />
-      </div>
+        <div id="betcard-container">
+            <br />
+            <br />
+
+            <div className="matchcard-team-header">
+                <img
+                    className="matchcard-team-logo"
+                    src={match.homeTeam.crest}
+                    alt=""
+                />
+                {match.homeTeam.name} - {match.awayTeam.name}
+                <img
+                    className="matchcard-team-logo"
+                    src={match.awayTeam.crest}
+                    alt=""
+                />
+            </div>
+            <h4>
+                BET: {bets.betTeam} &nbsp; STAKE: {bets.betAmount} &nbsp; ODDS:
+                {bets.oddsWhenBetsMade} &nbsp; OUTCOME: {Won()}
+            </h4>
+            <br />
+            <hr />
+        </div>
     );
-  };
-  
+};

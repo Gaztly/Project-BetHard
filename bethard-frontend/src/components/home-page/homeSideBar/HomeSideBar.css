@@ -8,9 +8,17 @@
 
     color: white;
     padding: 2rem 0;
+    text-align: center;
 }
 
 .home-sidebar-header-text {
     font-size: 1.5rem;
     padding-bottom: 1rem;
+    flex-basis: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .home-sidebar-container {
+        max-height: 500px;
+    }
 }
