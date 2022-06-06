@@ -34,9 +34,9 @@ namespace Project_BetHard.Controllers
         // POST: api/Bet/getbetsforuser
         [Route("getbetsforuser")]
         [HttpPost]
-        public async Task<ActionResult<Bet>> GetBetsForUser([FromBody] UserReturnObject input)
+        public async Task<IActionResult> GetBetsForUser([FromBody] UserReturnObject input)
         {
-             //BetMatchIds.
+            //BetMatchIds.
             var user = await _context.Users.Include(u => u.Wallet).FirstOrDefaultAsync(u => u.Username == input.Username);  //Get user from username
 
             if (user == null) return NotFound("Invalid user.");                     //Check if null
@@ -54,7 +54,6 @@ namespace Project_BetHard.Controllers
 
             return Ok(bets);
         }
-
 
         //UTIL method for updating bets for a user
         private async Task<List<Bet>> UpdateBets(List<Bet> bets, User user)
@@ -108,6 +107,8 @@ namespace Project_BetHard.Controllers
             if (user == null) return NotFound("Invalid user");
 
             if (!Util.Token.ValidateToken(input.userReturn.Token, user)) return Unauthorized("Invalid credentials");
+
+            if (await _context.Bets.AnyAsync(x => x.MatchId == input.Bet.MatchId)) return Conflict("You have already made a bet on this match.");
 
             var bet = input.Bet;             // tar bet från input och gör till ett bet. matchID och betamount sparas
 

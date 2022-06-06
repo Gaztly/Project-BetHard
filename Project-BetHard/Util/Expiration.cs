@@ -6,7 +6,7 @@ namespace Project_BetHard.Util
     {
         public static DateTime GetIVExpiration()
         {
-            return DateTime.UtcNow.AddMinutes(30);              //Change this when done testing
+            return DateTime.UtcNow.AddHours(12);              //Change this when done testing
         }
     }
 }
