@@ -3,6 +3,7 @@
     justify-content: space-evenly;
     box-sizing: border-box;
     margin-bottom: 0px;
+    justify-self: center;
 }
 
 .matchinfo {
@@ -34,6 +35,12 @@
 @media screen and (max-width: 1500px) {
     #match-box-style {
         display: inline-block;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .info-box {
+        margin: 20px 0;
     }
 }
 
