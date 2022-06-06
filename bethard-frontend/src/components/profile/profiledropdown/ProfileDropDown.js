@@ -8,7 +8,7 @@ import LocalStorage from "../../../shared/storage/LocalStorage";
 export const ProfileDropDown = () => {
   const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
-
+  let bal = Math.floor(user.wallet.balance);
   const logout = () => {
     localStorage.removeItem(LocalStorage.user);
     setUser(null);
@@ -17,9 +17,10 @@ export const ProfileDropDown = () => {
 
   return (
     <div id="profiledropdown">
-      <p> Email: </p>
-      <p>Balance:{user.wallet.balance}</p>
+      <span id="name">{user.username}</span>
+      <p>Balance:{bal}</p>
       <hr />
+      <br />
       <p>Edit Profile</p>
       <p>Settings</p>
       <p onClick={() => logout()}> Log Out</p>

@@ -11,36 +11,35 @@ import updateWallet from "../../shared/api/services/updateWallet-service";
 import { Profile } from "../../components/profile/Profile";
 
 function HomeLoggedInView() {
-    const [user, setUser] = useContext(UserContext);
-    const navigate = useNavigate();
+  const [user, setUser] = useContext(UserContext);
+  const navigate = useNavigate();
 
-    const logout = () => {
-        localStorage.removeItem(LocalStorage.user);
-        setUser(null);
-        navigate(RoutingPath.Home);
-    };
+  const logout = () => {
+    localStorage.removeItem(LocalStorage.user);
+    setUser(null);
+    navigate(RoutingPath.Home);
+  };
 
-    const updateWalletHandler = async () => {
-        const response = await updateWallet(user);
+  const updateWalletHandler = async () => {
+    const response = await updateWallet(user);
 
-        if (response.status !== 200) return;
+    if (response.status !== 200) return;
 
-        setUser(response.data);
-    };
+    setUser(response.data);
+  };
 
-    useEffect(() => {
-        updateWalletHandler();
-    }, []);
+  useEffect(() => {
+    updateWalletHandler();
+  }, []);
 
-    return (
-        <>
-            <div id="home-logged-in-container">
-                <HomeSideBar />
-                <HomeMainContent />
-                <Profile />
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div id="home-logged-in-container">
+        <HomeSideBar />
+        <HomeMainContent />
+      </div>
+    </>
+  );
 }
 
 export default HomeLoggedInView;

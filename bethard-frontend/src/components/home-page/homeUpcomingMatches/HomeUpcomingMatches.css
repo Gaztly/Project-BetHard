@@ -1,8 +1,9 @@
 #home-upcoming-matches-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
 }
 
 #home-upcoming-matches-inner {
