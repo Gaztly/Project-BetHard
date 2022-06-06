@@ -5,11 +5,11 @@ export const BetCard = ({ bets, index, match }) => {
         if (match.score.winner === null) {
             return "Pending";
         }
-        if (match.score.winner == "HOME_TEAM" && bets.betTeam == 1) {
+        if (match.score.winner === "HOME_TEAM" && bets.betTeam === "1") {
             return "Won";
-        } else if (match.score.winner == "AWAY_TEAM" && bets.betTeam == 2) {
+        } else if (match.score.winner === "AWAY_TEAM" && bets.betTeam === "2") {
             return "Won";
-        } else if (match.score.winner == "DRAW" && bets.betTeam == "X") {
+        } else if (match.score.winner === "DRAW" && bets.betTeam === "X") {
             return "Won";
         } else {
             return "Lost";

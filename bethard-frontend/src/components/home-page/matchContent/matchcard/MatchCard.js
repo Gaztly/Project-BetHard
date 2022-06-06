@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./MatchCard.css";
 export const MatchCard = ({ index, match, setModalMatch, setBetModal }) => {
     const showModal = () => {

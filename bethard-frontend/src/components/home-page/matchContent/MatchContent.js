@@ -38,6 +38,7 @@ export const MatchContent = () => {
                     if (match.status === "FINISHED") {
                         return <MatchCard key={index} match={match} />;
                     }
+                    return <></>;
                 })}
             </>
         ) : isError ? (
@@ -62,6 +63,7 @@ export const MatchContent = () => {
                             />
                         );
                     }
+                    return <></>;
                 })}
             </>
         ) : isError ? (
