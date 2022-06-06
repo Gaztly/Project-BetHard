@@ -1,0 +1,13 @@
+#betcard-container {
+    font-size: small;
+    /* position: relative; */
+    color: white;
+    text-shadow: 1px 1px gray;
+    border-radius: 15px;
+    transition: background-color 0.2s;
+    background-color: rgb(2, 29, 2);
+    cursor: pointer;
+    padding: 5px;
+    margin: 10px;
+}
+

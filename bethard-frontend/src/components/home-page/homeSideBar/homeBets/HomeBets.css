@@ -1,0 +1,31 @@
+.info-box {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 900x;
+    margin: 25px;
+    margin-top: 0;
+    background-color: #1a1a1a;
+    opacity: 0.8;
+    transition: opacity 0.4s;
+    border-radius: 10px;
+}
+
+#bet-box-style {
+    display: flex;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+    margin-bottom: 100px;
+}
+
+/* @media screen and (max-width: 1500px) {
+    #bet-box-style  {
+        display: inline-block;
+       
+    }
+} */
+@media screen and (max-width: 1500px) {
+    .info-box {
+        
+        height: 400px;
+    }
+}

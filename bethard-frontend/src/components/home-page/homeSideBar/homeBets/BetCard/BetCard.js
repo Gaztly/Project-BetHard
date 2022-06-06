@@ -34,7 +34,8 @@ export const BetCard = ({ bets, index, match }) => {
             </div>
             <h4>
                 BET: {bets.betTeam} &nbsp; STAKE: {bets.betAmount} &nbsp; ODDS:
-                {bets.oddsWhenBetsMade} &nbsp; OUTCOME: {Won()}
+                {bets.oddsWhenBetsMade} &nbsp; OUTCOME: {Won()} &nbsp; 
+                RESULT: {match.score.fullTime.home} - {match.score.fullTime.away}
             </h4>
             <br />
             <hr />
