@@ -17,9 +17,9 @@ export const ProfileDropDown = () => {
 
   return (
     <div id="profiledropdown">
-      <p> Email: </p>
       <p>Balance:{user.wallet.balance}</p>
       <hr />
+      <br />
       <p>Edit Profile</p>
       <p>Settings</p>
       <p onClick={() => logout()}> Log Out</p>

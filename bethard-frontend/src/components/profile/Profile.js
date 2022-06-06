@@ -10,7 +10,7 @@ export const Profile = () => {
     <>
       <div className="box"></div>
       <div id="profile">
-        <p>{user.username}</p>
+        Menu
         <ProfileDropDown />
       </div>
     </>
