@@ -1,13 +1,14 @@
 #home-upcoming-matches-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
 }
 
 #home-upcoming-matches-inner {
-    max-width: 80%;
-    color: white;
-    /* background-color: rgba(0, 0, 0, 0.3); */
-    margin-right: 3em;
+  max-width: 80%;
+  color: white;
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  margin-right: 3em;
 }

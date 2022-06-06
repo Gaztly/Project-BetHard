@@ -5,12 +5,12 @@ import HomeUpcomingMatches from "../homeUpcomingMatches/HomeUpcomingMatches";
 import "./HomeMainContent.css";
 
 function HomeMainContent() {
-    return (
-        <div id="home-main-content-container">
-            <UserInfo />
-            <HomeUpcomingMatches />
-        </div>
-    );
+  return (
+    <div id="home-main-content-container">
+      {/* <UserInfo /> */}
+      <HomeUpcomingMatches />
+    </div>
+  );
 }
 
 export default HomeMainContent;

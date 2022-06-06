@@ -1,13 +1,12 @@
 #profile {
   position: absolute;
-  right: 0.6rem;
+  right: 2.2rem;
   flex-wrap: wrap;
   font-weight: bolder;
-  top: 0.1rem;
+  top: 1.5rem;
   color: wheat;
   border-radius: 1.5em;
-  margin: 1.5em;
-  text-transform: uppercase;
+  text-transform: capitalize;
   z-index: 2;
 }
 

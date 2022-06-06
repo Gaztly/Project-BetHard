@@ -1,31 +1,31 @@
 .footer {
-    background: linear-gradient(
-        315deg,
-        var(--clr-GradientStart),
-        var(--clr-GradientEnd)
-    );
+  background: linear-gradient(
+    315deg,
+    var(--clr-GradientStart),
+    var(--clr-GradientEnd)
+  );
 
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2rem;
-    position: relative;
-    margin: 0;
-    bottom: 0;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  position: relative;
+  margin: 0;
+  bottom: 0;
 
-    z-index: 50;
-    width: 100%;
+  z-index: 50;
+  width: 100%;
 }
 
 .footer-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    width: 100%;
-    text-decoration: none;
-    font-size: 0.6rem;
-    position: absolute;
-    bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  text-decoration: none;
+  font-size: 0.6rem;
+  position: absolute;
+  bottom: 0;
 }

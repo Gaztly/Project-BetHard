@@ -1,48 +1,69 @@
 .navbar {
-    background: linear-gradient(
-        315deg,
-        var(--clr-GradientStart),
-        var(--clr-GradientEnd)
-    );
-    height: 80px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    font-size: 1.2rem;
-    top: 0;
+  background: linear-gradient(
+    315deg,
+    var(--clr-GradientStart),
+    var(--clr-GradientEnd)
+  );
+  height: 80px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-size: 1.2rem;
+  top: 0;
 }
 
 .navbar-center {
-    justify-content: center;
+  justify-content: center;
 }
 
 .navbar-container {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    height: 80px;
-    max-width: 1500px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  height: 80px;
+  max-width: 1500px;
 }
 
 .navbar-logo {
-    color: #242222;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
+  color: #242222;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
 }
 
 .navbar-logo-left {
-    justify-self: start;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(25%, 50%);
+  justify-self: start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(25%, 50%);
 }
 
 .fa-money-bill-1 {
-    margin-left: 0.5rem;
-    font-size: 2rem;
+  margin-left: 0.5rem;
+  font-size: 2rem;
+}
+
+#user-info {
+  display: inline-block;
+  position: absolute;
+  width: fit-content;
+  right: 6em;
+  text-transform: capitalize;
+  text-shadow: 2px 1px 2px rgb(175, 173, 170);
+}
+#user-info-cash {
+  position: relative;
+  right: 0;
+  text-align: right;
+}
+
+#user-info hr {
+  color: #0e0e0e;
+  width: 100%;
+  height: 4px solid black;
+  background-color: wheat;
 }

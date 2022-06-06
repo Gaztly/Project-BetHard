@@ -24,3 +24,8 @@
 #profile:hover #profiledropdown {
   display: block;
 }
+#name {
+  color: wheat;
+  opacity: 1;
+  text-transform: capitalize;
+}
