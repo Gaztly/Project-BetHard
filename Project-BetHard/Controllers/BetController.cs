@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_BetHard.Database;
+using Project_BetHard.Models;
 using Project_BetHard.Models.Matches;
 using Project_BetHard.Models.UtilModels;
 
@@ -33,22 +34,67 @@ namespace Project_BetHard.Controllers
         // POST: api/Bet/getbetsforuser
         [Route("getbetsforuser")]
         [HttpPost]
-        public async Task<ActionResult<Bet>> GetBetsForUser([FromBody] UserReturnObject input)
+        public async Task<IActionResult> GetBetsForUser([FromBody] UserReturnObject input)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == input.Username);  //Get user from username
+            //BetMatchIds.
+            var user = await _context.Users.Include(u => u.Wallet).FirstOrDefaultAsync(u => u.Username == input.Username);  //Get user from username
 
             if (user == null) return NotFound("Invalid user.");                     //Check if null
-            Debug.WriteLine("user: ", user.Username);
+
             if (!Util.Token.ValidateToken(input.Token, user)) return Unauthorized("Invalid credentials");   //Check if token is valid
 
             var bets = await _context.Bets.Include(b => b.User).ToListAsync();           //Get all bets
             bets = bets.FindAll(x => x.User.Id == user.Id);         //sort bets by user id
+
+            bets = await UpdateBets(bets, user);
 
             if (bets == null) return NotFound();                // no bets found
 
             bets.ForEach(b => b.User = null);
 
             return Ok(bets);
+        }
+
+        //UTIL method for updating bets for a user
+        private async Task<List<Bet>> UpdateBets(List<Bet> bets, User user)
+        {
+            foreach (Bet b in bets)
+            {
+                if (b.PaidOut == true) continue;        //if bet is already paid out, then skip this iteration
+
+                var match = await _context.Matches.Include(m => m.Score).FirstOrDefaultAsync(m => m.Id == b.MatchId);      //get match to check result
+                if (match == null) continue;
+
+                if (match.Status == null) continue;
+
+                //Get resultchar for comparison
+                char result = match.Score.Winner == "HOME_TEAM" ? '1' : match.Score.Winner == "DRAW" ? 'X' : '2';
+
+                //check if bet is won
+                if (b.BetTeam == result)
+                {
+                    await PayOut(b, user);
+                    b.BetWon = true;
+                }
+                else
+                {
+                    b.BetWon = false;
+                }
+                b.PaidOut = true;
+
+                _context.Bets.Update(b);
+                await _context.SaveChangesAsync();
+            }
+
+            return bets;
+        }
+
+        //Pays out the money to the users wallet and updates the wallet
+        private async Task PayOut(Bet bet, User user)
+        {
+            user.Wallet.Balance += bet.BetAmount * bet.OddsWhenBetsMade;
+            _context.Wallets.Update(user.Wallet);
+            await _context.SaveChangesAsync();
         }
 
         // POST: api/Bet
@@ -63,6 +109,8 @@ namespace Project_BetHard.Controllers
             if (user == null) return NotFound("Invalid user");
 
             if (!Util.Token.ValidateToken(input.userReturn.Token, user)) return Unauthorized("Invalid credentials");
+
+            if (await _context.Bets.Include(b => b.User).AnyAsync(x => (x.MatchId == input.Bet.MatchId && x.User.Id == user.Id))) return Conflict("You have already made a bet on this match.");
 
             var bet = input.Bet;             // tar bet från input och gör till ett bet. matchID och betamount sparas
 
@@ -80,56 +128,34 @@ namespace Project_BetHard.Controllers
             return Ok(bet);
         }
 
-        // PUT: api/Bet/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBet(int id, Bet bet)
+        // POST: api/Bet/deletebet
+        [Route("deletebet")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteBet([FromBody] BetInput input)
         {
-            if (id != bet.Id)
-            {
-                return BadRequest();
-            }
+            var match = await _context.Matches.FirstOrDefaultAsync(m => m.Id == input.Bet.MatchId);     //Hämtar matchen
 
-            _context.Entry(bet).State = EntityState.Modified;
+            if (match == null) return NotFound("Match not found.");         //kollar så matchen finns
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BetExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            if (match.UtcDate < DateTime.UtcNow) return BadRequest("Match has already started. Cannot remove bet.");
 
-            return NoContent();
-        }
+            var user = await _context.Users.Include(u => u.Wallet).FirstAsync(x => x.Username == input.userReturn.Username);   //User sparas i user, där användarei DB stämmer överrens med input-användaren.
 
-        // DELETE: api/Bet/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBet(int id)
-        {
-            var bet = await _context.Bets.FindAsync(id);
+            if (user == null) return NotFound("Invalid user");
+
+            var bet = await _context.Bets.FindAsync(input.Bet.Id);          //kolla så betet finns
             if (bet == null)
             {
-                return NotFound();
+                return NotFound("Bet could not be found.");
             }
 
-            _context.Bets.Remove(bet);
+            user.Wallet.Balance += bet.BetAmount;       //Användaren får tillbaka sina pengar
+            _context.Wallets.Update(user.Wallet);
+
+            _context.Bets.Remove(bet);          //Ta bort från databasen
             await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
-
-        private bool BetExists(int id)
-        {
-            return _context.Bets.Any(e => e.Id == id);
+            return Ok("Bet removed.");
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Project_BetHard.Models.UtilModels
 {
-    public class BetMatchIds
+    public  class BetMatchIds
     {
         public int[] MatchIds { get; set; }
     }

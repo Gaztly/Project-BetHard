@@ -4,6 +4,7 @@ import crossMark from "../../shared/img/icons/cross-mark.svg";
 import addBet from "../../shared/api/services/addBet-service";
 import { UserContext } from "../../shared/provider/UserProvider";
 import validateUser from "../../shared/api/services/validate-service";
+import { useNavigate } from "react-router-dom";
 
 function AddBetModal({ match, setBetModal }) {
     const [user, setUser] = useContext(UserContext);
@@ -12,6 +13,7 @@ function AddBetModal({ match, setBetModal }) {
     const [errorMessage, setErrorMessage] = useState();
     const modalRef = useRef();
     const crossRef = useRef();
+    const navigate = useNavigate();
 
     const submit = async (e) => {
         e.preventDefault();
@@ -32,6 +34,8 @@ function AddBetModal({ match, setBetModal }) {
             return;
         }
         setBetModal(false);
+
+        navigate(0);
         // updateUser();                behöver uppdatera plånboken. walletcontroller?
     };
 

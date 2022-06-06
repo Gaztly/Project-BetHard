@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./MatchCard.css";
 export const MatchCard = ({ index, match, setModalMatch, setBetModal }) => {
     const showModal = () => {
+        if (match.status === "FINISHED") return;
         setModalMatch(match);
         setBetModal(true);
     };
@@ -23,17 +24,33 @@ export const MatchCard = ({ index, match, setModalMatch, setBetModal }) => {
                     />
                 </div>
                 <div className="matchcard-scorecard">
-                    {/* <div className="matchcard-scorecard-header">Score</div> */}
+                    {match.status !== "FINISHED" ? (
+                        match.status === "IN_PLAY" ? (
+                            <div className="matchcard-scorecard-header">
+                                Playing
+                            </div>
+                        ) : (
+                            <div className="matchcard-scorecard-header scorecard-header-white">
+                                {new Date(match.utcDate).toLocaleTimeString(
+                                    [],
+                                    {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                    }
+                                )}
+                            </div>
+                        )
+                    ) : null}
                     <div className="matchcard-score">
                         <h3 className="matchcard-score-point">
                             {match.score.fullTime.home} -{" "}
-                            {match.score.halfTime.away}
+                            {match.score.fullTime.away}
                         </h3>
                     </div>
                     <div className="matchcard-score">
                         <h4 className="matchcard-score-point-halftime">
                             ({match.score.halfTime.home} -{" "}
-                            {match.score.fullTime.away})
+                            {match.score.halfTime.away})
                         </h4>
                     </div>
                 </div>

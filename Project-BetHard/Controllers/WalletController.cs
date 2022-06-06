@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_BetHard.Database;
 using Project_BetHard.Models;
+using Project_BetHard.Models.UtilModels;
 
 namespace Project_BetHard.Controllers
 {
@@ -21,88 +22,21 @@ namespace Project_BetHard.Controllers
             _context = context;
         }
 
-        // GET: api/Wallet
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Wallet>>> GetWallets()
-        {
-            return await _context.Wallets.ToListAsync();
-        }
-
-        // GET: api/Wallet/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Wallet>> GetWallet(int id)
-        {
-            var wallet = await _context.Wallets.FindAsync(id);
-
-            if (wallet == null)
-            {
-                return NotFound();
-            }
-
-            return wallet;
-        }
-
-        // PUT: api/Wallet/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutWallet(int id, Wallet wallet)
-        {
-            if (id != wallet.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(wallet).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!WalletExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Wallet
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/wallet/getupdatedwallet
+        [Route("updatewallet")]
         [HttpPost]
-        public async Task<ActionResult<Wallet>> PostWallet(Wallet wallet)
+        public async Task<IActionResult> UpdateWallet([FromBody] UserReturnObject input)
         {
-            _context.Wallets.Add(wallet);
-            await _context.SaveChangesAsync();
+            if (input == null) return BadRequest("No input.");
 
-            return CreatedAtAction("GetWallet", new { id = wallet.Id }, wallet);
-        }
+            if (!ModelState.IsValid) return BadRequest("Invalid input.");
 
-        // DELETE: api/Wallet/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteWallet(int id)
-        {
-            var wallet = await _context.Wallets.FindAsync(id);
-            if (wallet == null)
-            {
-                return NotFound();
-            }
+            var wallet = await _context.Wallets.FirstOrDefaultAsync(w => w.Id == input.Wallet.Id);      //hämta wallet för användare
 
-            _context.Wallets.Remove(wallet);
-            await _context.SaveChangesAsync();
+            if (wallet == null) return NotFound("Wallet not found.");
 
-            return NoContent();
-        }
-
-        private bool WalletExists(int id)
-        {
-            return _context.Wallets.Any(e => e.Id == id);
+            input.Wallet = wallet;      //Assigna uppdaterade wallet till input-objektet
+            return Ok(input);       //returnerar objektet igen (nu med uppdaterad wallet)
         }
     }
 }
