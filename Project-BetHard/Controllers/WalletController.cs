@@ -23,9 +23,9 @@ namespace Project_BetHard.Controllers
         }
 
         // POST: api/wallet/getupdatedwallet
-        [Route("getupdatedwallet")]
+        [Route("updatewallet")]
         [HttpPost]
-        public async Task<IActionResult> GetUpdatedWallet([FromBody] UserReturnObject input)
+        public async Task<IActionResult> UpdateWallet([FromBody] UserReturnObject input)
         {
             if (input == null) return BadRequest("No input.");
 

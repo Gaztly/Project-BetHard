@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeMainContent from "../../components/home-page/homeMainContent/HomeMainContent";
 import HomeSideBar from "../../components/home-page/homeSideBar/HomeSideBar";
 import { UserContext } from "../../shared/provider/UserProvider";
@@ -7,31 +7,44 @@ import { useNavigate } from "react-router-dom";
 import LocalStorage from "../../shared/storage/LocalStorage";
 import RoutingPath from "../../Routes/RoutingPath";
 import "./HomeLoggedInView.css";
+import updateWallet from "../../shared/api/services/updateWallet-service";
 
 function HomeLoggedInView() {
-  const [user, setUser] = useContext(UserContext);
-  const [username, setUsername] = useState("");
-  const navigate = useNavigate();
+    const [user, setUser] = useContext(UserContext);
+    const navigate = useNavigate();
 
-  const logout = () => {
-    localStorage.removeItem(LocalStorage.user);
-    setUser(null);
-    navigate(RoutingPath.Home);
-  };
-  return (
-    <>
-      <div id="home-logged-in-container">
-        <HomeSideBar />
+    const logout = () => {
+        localStorage.removeItem(LocalStorage.user);
+        setUser(null);
+        navigate(RoutingPath.Home);
+    };
 
-        <HomeMainContent />
-      </div>
-      <div className="btn-container">
-        <button id="logout-btn" onClick={() => logout()}>
-          Log Out
-        </button>
-      </div>
-    </>
-  );
+    const updateWalletHandler = async () => {
+        const response = await updateWallet(user);
+
+        if (response.status !== 200) return;
+
+        setUser(response.data);
+    };
+
+    useEffect(() => {
+        updateWalletHandler();
+    }, []);
+
+    return (
+        <>
+            <div id="home-logged-in-container">
+                <HomeSideBar />
+
+                <HomeMainContent />
+            </div>
+            <div className="btn-container">
+                <button id="logout-btn" onClick={() => logout()}>
+                    Log Out
+                </button>
+            </div>
+        </>
+    );
 }
 
 export default HomeLoggedInView;

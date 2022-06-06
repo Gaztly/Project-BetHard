@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./MatchCard.css";
 export const MatchCard = ({ index, match, setModalMatch, setBetModal }) => {
     const showModal = () => {
+        if (match.status === "FINISHED") return;
         setModalMatch(match);
         setBetModal(true);
     };
