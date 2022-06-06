@@ -1,3 +1,5 @@
+import "./BetCard.css";
+
 export const BetCard = ({ bets, index, match }) => {
     const Won = () => {
         if (match.score.winner === null) {
@@ -16,9 +18,6 @@ export const BetCard = ({ bets, index, match }) => {
 
     return (
         <div id="betcard-container">
-            <br />
-            <br />
-
             <div className="matchcard-team-header">
                 <img
                     className="matchcard-team-logo"
@@ -34,11 +33,11 @@ export const BetCard = ({ bets, index, match }) => {
             </div>
             <h4>
                 BET: {bets.betTeam} &nbsp; STAKE: {bets.betAmount} &nbsp; ODDS:
-                {bets.oddsWhenBetsMade} &nbsp; OUTCOME: {Won()} &nbsp; 
-                RESULT: {match.score.fullTime.home} - {match.score.fullTime.away}
+                {bets.oddsWhenBetsMade} &nbsp;
+                <br /> OUTCOME: {Won()} &nbsp; RESULT:{" "}
+                {match.score.fullTime.home} - {match.score.fullTime.away}
             </h4>
             <br />
-            <hr />
         </div>
     );
 };

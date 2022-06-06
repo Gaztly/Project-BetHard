@@ -22,7 +22,9 @@ export const MatchContent = () => {
                 return;
             }
 
-            setMatches(response.data);
+            setMatches(
+                response.data.sort((a, b) => a.utcDate.localeCompare(b.utcDate))
+            );
             setIsLoaded(true);
         } catch (error) {
             console.log(error);

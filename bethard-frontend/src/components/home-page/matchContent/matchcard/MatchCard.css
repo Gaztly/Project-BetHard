@@ -22,21 +22,26 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .matchcard-team-logo {
     height: 40px;
     margin: 0 15px;
+    padding: 0;
 }
 
 .matchcard-scorecard {
     margin-top: 0;
+    padding: 0;
 }
 
 .matchcard-scorecard-header {
     flex-basis: 100%;
     font-size: 1.2rem;
     color: green;
+    margin: 0;
+    padding: 0;
 }
 
 .scorecard-header-white {
@@ -44,6 +49,7 @@
 }
 
 .matchcard-score {
+    padding: 0;
 }
 
 .matchcard-score-point {
@@ -53,6 +59,8 @@
 
 .matchcard-score-point-halftime {
     font-size: 1rem;
+    padding: 0;
+    margin: 0;
 }
 
 .matchcard-odds {
@@ -64,14 +72,15 @@
     font-family: "Times New Roman", Times, serif;
     text-transform: uppercase;
     font-weight: bolder;
-    margin: 20px;
+    margin: 0px 20px;
+    padding: 0;
 }
 
 .matchcard-odds-header {
     font-size: 1.2rem;
     /* font-weight: bold; */
     flex-basis: 100%;
-    margin: 10px;
+    margin: 15px 0 5px 0;
 }
 
 .matchcard-odds-value {

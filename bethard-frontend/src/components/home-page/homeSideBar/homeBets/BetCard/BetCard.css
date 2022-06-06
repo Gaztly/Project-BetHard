@@ -11,3 +11,6 @@
     margin: 10px;
 }
 
+#betcard-container:hover {
+    background-color: rgb(3, 85, 3);
+}

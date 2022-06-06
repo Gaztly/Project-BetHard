@@ -33,7 +33,8 @@ function RegisterField() {
         setIsLoading(false);
         if (userObject.status !== 200) {
             setErrorMessage(userObject.data);
-            return alert(errorMessage);
+            alert(errorMessage);
+            return;
         }
         setUser(userObject.data);
         localStorage.setItem(
