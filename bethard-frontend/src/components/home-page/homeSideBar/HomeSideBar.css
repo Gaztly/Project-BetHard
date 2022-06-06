@@ -1,18 +1,19 @@
 .home-sidebar-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  background-color: rgb(35, 34, 34);
-  border-right: 1px solid white;
-  /* box-shadow: -5px 0px 20px 0px rgba(255, 255, 255, 0.4) inset; */
-  height: 100%;
-  color: white;
-  padding: 2rem 0;
-  text-align: center;
+    /* display: flex; */
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    background-color: rgb(35, 34, 34);
+    border-right: 1px solid white;
+    /* box-shadow: -5px 0px 20px 0px rgba(255, 255, 255, 0.4) inset; */
+
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
 }
 
 @media screen and (max-width: 600px) {
-  .home-sidebar-container {
-    max-height: 500px;
-  }
+    /* .home-sidebar-container {
+        max-height: 500px;
+    } */
 }

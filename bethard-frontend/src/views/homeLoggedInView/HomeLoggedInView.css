@@ -4,6 +4,12 @@
     grid-template-columns: 1fr 3fr;
 }
 
+@media screen and (max-width: 1500px) {
+    #home-logged-in-container {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
 @media screen and (max-width: 600px) {
     #home-logged-in-container {
         grid-template-columns: 1fr;

@@ -83,14 +83,12 @@ function HomeBets() {
     }, []);
 
     return (
-        <main id="bet-box-style">
-            <div id="matchinfo">
-                <div className="info-box">
-                    <h2 id="match-title">Placed bets</h2>
-                    {PlacedBets()}
-                </div>
+        <div id="bet-box-style">
+            <div className="bets-info-box">
+                <h2 id="match-title">Placed bets</h2>
+                {PlacedBets()}
             </div>
-        </main>
+        </div>
     );
 }
 
