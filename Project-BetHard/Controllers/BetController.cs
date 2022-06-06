@@ -137,11 +137,18 @@ namespace Project_BetHard.Controllers
 
             if (match.UtcDate < DateTime.UtcNow) return BadRequest("Match has already started. Cannot remove bet.");
 
+            var user = await _context.Users.Include(u => u.Wallet).FirstAsync(x => x.Username == input.userReturn.Username);   //User sparas i user, där användarei DB stämmer överrens med input-användaren.
+
+            if (user == null) return NotFound("Invalid user");
+
             var bet = await _context.Bets.FindAsync(input.Bet.Id);          //kolla så betet finns
             if (bet == null)
             {
                 return NotFound("Bet could not be found.");
             }
+
+            user.Wallet.Balance += bet.BetAmount;       //Användaren får tillbaka sina pengar
+            _context.Wallets.Update(user.Wallet);
 
             _context.Bets.Remove(bet);          //Ta bort från databasen
             await _context.SaveChangesAsync();
