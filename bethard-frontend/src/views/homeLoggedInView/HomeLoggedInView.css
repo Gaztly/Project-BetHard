@@ -1,26 +1,32 @@
 #home-logged-in-container {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+@media screen and (max-width: 600px) {
+    #home-logged-in-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 .btn-container {
-  top: 0;
-  right: 0;
-  position: absolute;
+    top: 0;
+    right: 0;
+    position: absolute;
 }
 
 #logout-btn {
-  width: 10vh;
-  height: 6em;
-  font-weight: bold;
-  background-color: grey;
-  transition: all 2s;
+    width: 10vh;
+    height: 6em;
+    font-weight: bold;
+    background-color: grey;
+    transition: all 2s;
 }
 
 #logout-btn:hover {
-  color: red;
-  cursor: pointer;
-  font-weight: bolder;
-  background-color: black;
+    color: red;
+    cursor: pointer;
+    font-weight: bolder;
+    background-color: black;
 }

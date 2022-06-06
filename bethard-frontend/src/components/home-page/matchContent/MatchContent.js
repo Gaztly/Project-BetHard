@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../../../shared/api/services/findMatches-service";
 import { MatchCard } from "./matchcard/MatchCard";
 import "./MatchContent.css";
-import { Loader } from "../../../shared/loader/Loader";
+import { Loader } from "../../loader/Loader";
 import AddBetModal from "../../addbetmodal/AddBetModal";
 
 export const MatchContent = () => {
@@ -10,21 +10,20 @@ export const MatchContent = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [betModal, setBetModal] = useState(false);
     const [modalMatch, setModalMatch] = useState();
+    const [isError, setIsError] = useState(false);
 
     const findMatches = async () => {
         try {
-            const { data } = await API.findRelevantMatches();
-            setMatches(data);
-            setIsLoaded(true);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+            setIsError(false);
+            const response = await API.findRelevantMatches();
 
-    const findMatchId = async () => {
-        try {
-            const { data } = await API.findMatchById(2);
-            setMatches(data);
+            if (response.status !== 200) {
+                setIsError(true);
+                return;
+            }
+
+            setMatches(response.data);
+            setIsLoaded(true);
         } catch (error) {
             console.log(error);
         }
@@ -33,15 +32,14 @@ export const MatchContent = () => {
     const playedMatches = () => {
         return isLoaded ? (
             <>
-                <h2 id="match-title">Played Matches</h2>
-                <div className="info-box">
-                    {matches?.map((match, index) => {
-                        if (match.status === "FINISHED") {
-                            return <MatchCard key={index} match={match} />;
-                        }
-                    })}
-                </div>
+                {matches?.map((match, index) => {
+                    if (match.status === "FINISHED") {
+                        return <MatchCard key={index} match={match} />;
+                    }
+                })}
             </>
+        ) : isError ? (
+            <h3>Error loading matches</h3>
         ) : (
             <span>
                 <Loader />
@@ -49,24 +47,16 @@ export const MatchContent = () => {
         );
     };
     const comingMatches = () => {
-        return isLoaded ? (
+        return isLoaded && !isError ? (
             <>
-                <h2 id="match-title">Coming Matches</h2>
-                <div className="info-box">
-                    {matches?.map((match, index) => {
-                        if (match.status !== "FINISHED") {
-                            return (
-                                <MatchCard
-                                    key={index}
-                                    match={match}
-                                    setModalMatch={setModalMatch}
-                                    setBetModal={setBetModal}
-                                />
-                            );
-                        }
-                    })}
-                </div>
+                {matches?.map((match, index) => {
+                    if (match.status !== "FINISHED") {
+                        return <MatchCard key={index} match={match} />;
+                    }
+                })}
             </>
+        ) : isError ? (
+            <h3>Error loading matches</h3>
         ) : (
             <span>
                 <Loader />
@@ -86,8 +76,15 @@ export const MatchContent = () => {
     return (
         <main id="match-box-style">
             {betModal && getModal()}
-            <div className="matchinfo">{comingMatches()}</div>
-            <div className="matchinfo matchinfo-bottom">{playedMatches()}</div>
+
+            <div className="matchinfo">
+                <h2 id="match-title">Coming Matches</h2>
+                <div className="info-box">{comingMatches()}</div>
+            </div>
+            <div className="matchinfo matchinfo-bottom">
+                <h2 id="match-title">Played Matches</h2>
+                <div className="info-box">{playedMatches()}</div>
+            </div>
         </main>
     );
 };
