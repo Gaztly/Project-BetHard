@@ -93,6 +93,7 @@ namespace Project_BetHard.Controllers
         private async Task PayOut(Bet bet, User user)
         {
             user.Wallet.Balance += bet.BetAmount * bet.OddsWhenBetsMade;
+            user.Wallet.Balance = Math.Floor(user.Wallet.Balance);      //avrundar
             _context.Wallets.Update(user.Wallet);
             await _context.SaveChangesAsync();
         }
