@@ -51,7 +51,14 @@ export const MatchContent = () => {
             <>
                 {matches?.map((match, index) => {
                     if (match.status !== "FINISHED") {
-                        return <MatchCard key={index} match={match} />;
+                        return (
+                            <MatchCard
+                                key={index}
+                                match={match}
+                                setModalMatch={setModalMatch}
+                                setBetModal={setBetModal}
+                            />
+                        );
                     }
                 })}
             </>

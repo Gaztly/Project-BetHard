@@ -65,6 +65,8 @@ namespace Project_BetHard.Controllers
                 var match = await _context.Matches.Include(m => m.Score).FirstOrDefaultAsync(m => m.Id == b.MatchId);      //get match to check result
                 if (match == null) continue;
 
+                if (match.Status == null) continue;
+
                 //Get resultchar for comparison
                 char result = match.Score.Winner == "HOME_TEAM" ? '1' : match.Score.Winner == "DRAW" ? 'X' : '2';
 
@@ -108,7 +110,7 @@ namespace Project_BetHard.Controllers
 
             if (!Util.Token.ValidateToken(input.userReturn.Token, user)) return Unauthorized("Invalid credentials");
 
-            if (await _context.Bets.AnyAsync(x => x.MatchId == input.Bet.MatchId)) return Conflict("You have already made a bet on this match.");
+            if (await _context.Bets.Include(b => b.User).AnyAsync(x => (x.MatchId == input.Bet.MatchId && x.User.Id == user.Id))) return Conflict("You have already made a bet on this match.");
 
             var bet = input.Bet;             // tar bet från input och gör till ett bet. matchID och betamount sparas
 

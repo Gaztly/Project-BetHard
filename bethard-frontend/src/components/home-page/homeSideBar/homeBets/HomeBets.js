@@ -54,7 +54,6 @@ function HomeBets() {
                         const match = matchData?.filter(
                             (x) => x.id === bets.matchId
                         )[0];
-                        console.log(match);
                         return (
                             <BetCard key={index} bets={bets} match={match} />
                         );
