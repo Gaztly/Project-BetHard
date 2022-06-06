@@ -1,7 +1,7 @@
 #bet-box-style {
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 800px;
+    max-height: 80vh;
     margin: 20px;
     margin-top: 0;
     background-color: #1a1a1a;
@@ -17,12 +17,12 @@
 
 @media screen and (max-width: 1500px) {
     #bet-box-style {
-        max-height: 90vh;
+        max-height: 80vh;
     }
 }
 
 @media screen and (max-width: 600px) {
     #bet-box-style {
         max-height: 400px;
-  }
+    }
 }
