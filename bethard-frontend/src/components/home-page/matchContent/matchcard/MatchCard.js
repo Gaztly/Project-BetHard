@@ -31,6 +31,14 @@ export const MatchCard = ({ index, match, setModalMatch, setBetModal }) => {
                             </div>
                         ) : (
                             <div className="matchcard-scorecard-header scorecard-header-white">
+                                {new Date(match.utcDate).toLocaleDateString(
+                                    [],
+                                    {
+                                        month: "numeric",
+                                        day: "numeric",
+                                    }
+                                )}
+                                &nbsp;
                                 {new Date(match.utcDate).toLocaleTimeString(
                                     [],
                                     {
@@ -40,18 +48,25 @@ export const MatchCard = ({ index, match, setModalMatch, setBetModal }) => {
                                 )}
                             </div>
                         )
-                    ) : null}
+                    ) : (
+                        <div className="matchcard-scorecard-header scorecard-header-white">
+                            {new Date(match.utcDate).toLocaleDateString([], {
+                                month: "numeric",
+                                day: "numeric",
+                            })}
+                        </div>
+                    )}
                     <div className="matchcard-score">
-                        <h3 className="matchcard-score-point">
+                        <div className="matchcard-score-point">
                             {match.score.fullTime.home} -{" "}
                             {match.score.fullTime.away}
-                        </h3>
+                        </div>
                     </div>
                     <div className="matchcard-score">
-                        <h4 className="matchcard-score-point-halftime">
+                        <div className="matchcard-score-point-halftime">
                             ({match.score.halfTime.home} -{" "}
                             {match.score.halfTime.away})
-                        </h4>
+                        </div>
                     </div>
                 </div>
 
