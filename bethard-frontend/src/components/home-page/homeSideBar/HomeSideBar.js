@@ -6,7 +6,7 @@ import "./HomeSideBar.css";
 function HomeSideBar() {
     return (
         <div class="home-sidebar-container">
-            <div class="home-sidebar-header-text">YOUR BETS</div>
+            <div class="home-sidebar-header-text"></div>
             <HomeBets />
         </div>
     );

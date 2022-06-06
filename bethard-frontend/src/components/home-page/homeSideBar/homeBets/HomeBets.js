@@ -75,7 +75,7 @@ function HomeBets() {
     }, []);
 
     return (
-        <main id="match-box-style">
+        <main id="bet-box-style">
             <div id="matchinfo">
                 <div className="info-box">
                     <h2 id="match-title">Placed bets</h2>
