@@ -1,0 +1,60 @@
+#profile {
+  position: absolute;
+  display: flex;
+  right: 0;
+  font-weight: bolder;
+  top: 0.2em;
+  color: wheat;
+  justify-content: center;
+  border-radius: 1.5em;
+  margin: 0.2em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+#profile:hover {
+  cursor: pointer;
+}
+
+.box {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  top: 0px;
+  right: 0px;
+  bottom: 100;
+  left: 100;
+  overflow: hidden;
+  box-shadow: 0px 20px 20px rgb(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.box::before {
+  position: absolute;
+  width: 150%;
+  height: 50%;
+  left: -31%;
+  top: 25%;
+  animation: rollbox 3s infinite linear;
+  content: "";
+  background-color: black;
+  opacity: 1;
+}
+.box::after {
+  position: absolute;
+  width: 94%;
+  height: 94%;
+  background-color: rgb(14, 14, 14);
+  top: 3%;
+  left: 3%;
+  opacity: 1;
+  border-radius: 10px;
+  content: "";
+}
+
+@keyframes rollbox {
+  100% {
+    transform: rotate(360deg);
+  }
+}

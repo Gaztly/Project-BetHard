@@ -1,0 +1,25 @@
+#profiledropdown {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  display: none;
+  width: 10rem;
+  border-radius: 10px;
+  background-color: gray;
+  opacity: 0.8;
+}
+#profiledropdown p {
+  cursor: pointer;
+  color: white;
+}
+
+#profiledropdown:hover {
+  display: block;
+}
+#profiledropdown p:hover {
+  color: rgb(24, 24, 24);
+}
+
+#profile:hover #profiledropdown {
+  display: block;
+}

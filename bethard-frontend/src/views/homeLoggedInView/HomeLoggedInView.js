@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import LocalStorage from "../../shared/storage/LocalStorage";
 import RoutingPath from "../../Routes/RoutingPath";
 import "./HomeLoggedInView.css";
+import { Profile } from "../../components/profile/Profile";
 
 function HomeLoggedInView() {
   const [user, setUser] = useContext(UserContext);
@@ -22,13 +23,8 @@ function HomeLoggedInView() {
     <>
       <div id="home-logged-in-container">
         <HomeSideBar />
-
         <HomeMainContent />
-      </div>
-      <div className="btn-container">
-        <button id="logout-btn" onClick={() => logout()}>
-          Log Out
-        </button>
+        <Profile />
       </div>
     </>
   );
