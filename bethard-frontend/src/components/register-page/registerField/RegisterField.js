@@ -6,7 +6,6 @@ import RoutingPath from "../../../Routes/RoutingPath";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../shared/provider/UserProvider";
 import LocalStorage from "../../../shared/storage/LocalStorage";
-import loginUser from "../../../shared/api/services/login-service";
 import { Loader } from "../../loader/Loader";
 
 function RegisterField() {
