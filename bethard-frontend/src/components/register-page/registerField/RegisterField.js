@@ -33,7 +33,7 @@ function RegisterField() {
         setIsLoading(false);
         if (userObject.status !== 200) {
             setErrorMessage(userObject.data);
-            return alert(errorMessage);
+            return;
         }
         setUser(userObject.data);
         localStorage.setItem(
@@ -41,7 +41,6 @@ function RegisterField() {
             JSON.stringify(userObject.data)
         );
 
-        loginUser(username, password);
         navigate(RoutingPath.Home);
     };
 
@@ -89,9 +88,12 @@ function RegisterField() {
                     {isLoading ? (
                         <Loader />
                     ) : (
-                        <button className="btn" onClick={() => submit()}>
-                            SUBMIT
-                        </button>
+                        <>
+                            {errorMessage ? <p>{errorMessage}</p> : null}
+                            <button className="btn" onClick={() => submit()}>
+                                SUBMIT
+                            </button>
+                        </>
                     )}
                 </form>
             </div>

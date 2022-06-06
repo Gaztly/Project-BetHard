@@ -29,7 +29,9 @@ function HomeBets() {
             }
 
             const data = response.data;
-            setBets(data);
+            setBets(
+                data.sort((a, b) => b.timePlaced.localeCompare(a.timePlaced))
+            );
 
             const matchIds = data?.map((b) => b.matchId);
 
@@ -55,7 +57,14 @@ function HomeBets() {
                             (x) => x.id === bets.matchId
                         )[0];
                         return (
-                            <BetCard key={index} bets={bets} match={match} />
+                            <>
+                                <BetCard
+                                    key={index}
+                                    bets={bets}
+                                    match={match}
+                                />
+                                <hr />
+                            </>
                         );
                     })
                 )}
