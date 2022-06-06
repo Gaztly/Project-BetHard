@@ -83,7 +83,7 @@ export const MatchContent = () => {
     }, []);
 
     return (
-        <main id="match-box-style">
+        <div id="match-box-style">
             {betModal && getModal()}
 
             <div className="matchinfo">
@@ -94,6 +94,6 @@ export const MatchContent = () => {
                 <h2 id="match-title">Played Matches</h2>
                 <div className="info-box">{playedMatches()}</div>
             </div>
-        </main>
+        </div>
     );
 };

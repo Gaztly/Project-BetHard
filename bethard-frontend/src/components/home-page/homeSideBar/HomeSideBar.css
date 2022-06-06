@@ -1,7 +1,8 @@
 .home-sidebar-container {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     flex-wrap: wrap;
+    align-items: flex-start;
     background-color: rgb(35, 34, 34);
     border-right: 1px solid white;
     /* box-shadow: -5px 0px 20px 0px rgba(255, 255, 255, 0.4) inset; */
@@ -11,9 +12,8 @@
     text-align: center;
 }
 
-
 @media screen and (max-width: 600px) {
-    .home-sidebar-container {
+    /* .home-sidebar-container {
         max-height: 500px;
-    }
+    } */
 }
