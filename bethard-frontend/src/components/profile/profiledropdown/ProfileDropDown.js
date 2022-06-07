@@ -17,8 +17,12 @@ export const ProfileDropDown = () => {
 
   return (
     <div id="profiledropdown">
-      <span id="name">{user.username}</span>
-      <p>Balance:{bal}</p>
+      <span id="name">
+        <h3>{user.username}</h3>
+      </span>
+      <span>
+        <h4>Balance:{bal}</h4>
+      </span>
       <hr />
       <br />
       <p>Edit Profile</p>
