@@ -6,7 +6,7 @@
   width: fit-content;
   border-radius: 10px;
   background-color: gray;
-  opacity: 0.8;
+  opacity: 0.9;
   border: 3px solid black;
 }
 #profiledropdown p {
@@ -25,7 +25,8 @@
   display: block;
 }
 #name {
-  color: wheat;
+  color: black;
   opacity: 1;
+
   text-transform: capitalize;
 }
