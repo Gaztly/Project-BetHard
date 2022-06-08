@@ -10,9 +10,7 @@ namespace Project_BetHard.Models.Matches
         public int MatchId { get; set; }
 
         public double One { get; set; }
-
-        [Column("X")]
-        public double Cross { get; set; }
+        public double X { get; set; }
 
         public double Two { get; set; }
     }

@@ -25,7 +25,7 @@ namespace Project_BetHard.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                     
+
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Emblem = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -41,7 +41,7 @@ namespace Project_BetHard.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     One = table.Column<double>(type: "float", nullable: false),
-                    Cross = table.Column<double>(type: "float", nullable: false),
+                    X = table.Column<double>(type: "float", nullable: false),
                     Two = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -68,7 +68,7 @@ namespace Project_BetHard.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                      
+
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     MatchRound = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -84,7 +84,7 @@ namespace Project_BetHard.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                        
+
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Tla = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Crest = table.Column<string>(type: "nvarchar(max)", nullable: true)

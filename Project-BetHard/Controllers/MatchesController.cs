@@ -102,9 +102,7 @@ namespace Project_BetHard.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMatchById(int id)
         {
-
             //Hämta betmatchIDs från front end.
-
 
             var match = await _context.Matches
                     .Include(m => m.Area)
@@ -235,6 +233,8 @@ namespace Project_BetHard.Controllers
         //Get all matches, with IDs assigned to the odds, scores, halftimes and fulltimes objects
         private async Task<List<Match>> GetMatchesWithIDs()
         {
+            if (await _context.UpdateHistories.FirstOrDefaultAsync() == null) return await FillMatchesToDB();
+
             var odds = await _context.Odds.ToListAsync();
             var score = await _context.Scores.Include(x => x.FullTime).Include(x => x.HalfTime).ToListAsync();
             List<Match> matches = await Util.ApiCalls.GetBrazilMatches(); //skapar en lista av getbrazilmatches()
@@ -259,7 +259,7 @@ namespace Project_BetHard.Controllers
                 double minOdds = 1.15;
                 Random rand = new Random();
                 match.Odds.One = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
-                match.Odds.Cross = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
+                match.Odds.X = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
                 match.Odds.Two = Math.Round(rand.NextDouble() * (maxOdds - minOdds) + minOdds, 2);
             }
             return matches;
@@ -270,6 +270,11 @@ namespace Project_BetHard.Controllers
         {
             _context.ChangeTracker.Clear();
             _context.Attach(match);
+            _context.Areas.Update(match.Area);
+            _context.Competitions.Update(match.Competition);
+            _context.Seasons.Update(match.Season);
+            _context.Teams.Update(match.HomeTeam);
+            _context.Teams.Update(match.AwayTeam);
             _context.Matches.Update(match);
             _context.Scores.Update(match.Score);
             _context.ScoreTimes.UpdateRange(new ScoreTime[] { match.Score.HalfTime, match.Score.FullTime });
@@ -284,28 +289,37 @@ namespace Project_BetHard.Controllers
             return lastUpdate == null || lastUpdate.LastUpdate < DateTime.UtcNow.AddMinutes(-10);           //Check if last update is more than 10 minutes ago
         }
 
-        //// GET: api/Matches
-        //[Route("Filldb")]
-        //[HttpGet]
-        //public async Task<IActionResult> GetMatch() //  IactionResult Returnar Ok()
-        //{
-        //    List<Match> matches = await Util.ApiCalls.GetBrazilMatches(); //skapar en lista av getbrazilmatches()
+        //Method that fills up database on first updatehistory
+        private async Task<List<Match>> FillMatchesToDB()
+        {
+            List<Match> matches = await Util.ApiCalls.GetBrazilMatches(); //skapar en lista av getbrazilmatches()
 
-        //    foreach (var match in matches)
-        //    {
-        //        match.Odds.MatchId = match.Id;
-        //        match.Score.MatchId = match.Id;
-        //        match.Score.HalfTime.MatchId = match.Id;
-        //        match.Score.FullTime.MatchId = match.Id;
+            if (await _context.Areas.FirstOrDefaultAsync() == null)
+            {
+                await _context.Areas.AddAsync(matches[0].Area);
+                await _context.Competitions.AddAsync(matches[0].Competition);
+                await _context.Seasons.AddAsync(matches[0].Season);
+                await _context.SaveChangesAsync();
+            }
 
-        //        _context.ChangeTracker.Clear();
-        //        _context.Attach(match);
+            foreach (var match in matches)
+            {
+                if (!await _context.Teams.ContainsAsync(match.HomeTeam)) await _context.Teams.AddAsync(match.HomeTeam);
+                if (!await _context.Teams.ContainsAsync(match.AwayTeam)) await _context.Teams.AddAsync(match.AwayTeam);
+                await _context.SaveChangesAsync();
 
-        //        await _context.Matches.AddAsync(match);
-        //        await _context.SaveChangesAsync();
-        //    }
+                match.Odds.MatchId = match.Id;
+                match.Score.MatchId = match.Id;
+                match.Score.HalfTime.MatchId = match.Id;
+                match.Score.FullTime.MatchId = match.Id;
 
-        //    return Ok(matches);
-        //}
+                _context.ChangeTracker.Clear();
+                _context.Attach(match);
+
+                await _context.Matches.AddAsync(match);
+                await _context.SaveChangesAsync();
+            }
+            return matches;
+        }
     }
 }

@@ -114,7 +114,7 @@ function AddBetModal({ match, setBetModal }) {
                                 <label for="betX">
                                     DRAW
                                     <br />
-                                    {match.odds.cross}
+                                    {match.odds.x}
                                 </label>
                                 <br />
                                 <input

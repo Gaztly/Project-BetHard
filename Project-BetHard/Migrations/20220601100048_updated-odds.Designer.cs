@@ -142,7 +142,7 @@ namespace Project_BetHard.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Cross")
+                    b.Property<double>("X")
                         .HasColumnType("float");
 
                     b.Property<int>("MatchId")
