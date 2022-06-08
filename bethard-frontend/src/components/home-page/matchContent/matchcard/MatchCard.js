@@ -77,7 +77,7 @@ export const MatchCard = ({ index, match, setModalMatch, setBetModal }) => {
                             {match.odds.one}
                         </span>
                         <span className="matchcard-odds-value">
-                            {match.odds.cross}
+                            {match.odds.x}
                         </span>
                         <span className="matchcard-odds-value">
                             {match.odds.two}

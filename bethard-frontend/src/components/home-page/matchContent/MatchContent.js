@@ -6,7 +6,7 @@ import { Loader } from "../../loader/Loader";
 import AddBetModal from "../../addbetmodal/AddBetModal";
 
 export const MatchContent = () => {
-    const [matches, setMatches] = useState();
+    const [matches, setMatches] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [betModal, setBetModal] = useState(false);
     const [modalMatch, setModalMatch] = useState();
@@ -42,7 +42,11 @@ export const MatchContent = () => {
                 })}
             </>
         ) : isError ? (
-            <h3>Error loading matches</h3>
+            <h3>
+                Error loading matches.
+                <br />
+                Please try reloading the website.
+            </h3>
         ) : (
             <span>
                 <Loader />
@@ -81,7 +85,7 @@ export const MatchContent = () => {
     };
 
     useEffect(() => {
-        findMatches();
+        if (matches == null) findMatches();
     }, []);
 
     return (

@@ -10,8 +10,8 @@ using Project_BetHard.Database;
 namespace Project_BetHard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220601091902_addedMatchIdToScores")]
-    partial class addedMatchIdToScores
+    [Migration("20220608102617_renamedcrosstoxinmodel")]
+    partial class renamedcrosstoxinmodel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Project_BetHard.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Project_BetHard.Models.Area", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Area", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -37,7 +37,7 @@ namespace Project_BetHard.Migrations
                     b.ToTable("Areas");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Bet", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Bet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,6 +50,9 @@ namespace Project_BetHard.Migrations
                     b.Property<string>("BetTeam")
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
+
+                    b.Property<bool?>("BetWon")
+                        .HasColumnType("bit");
 
                     b.Property<int>("MatchId")
                         .HasColumnType("int");
@@ -73,7 +76,7 @@ namespace Project_BetHard.Migrations
                     b.ToTable("Bets");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Competition", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Competition", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -89,7 +92,7 @@ namespace Project_BetHard.Migrations
                     b.ToTable("Competitions");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Match", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Match", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -135,15 +138,12 @@ namespace Project_BetHard.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Odds", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Odds", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("X")
-                        .HasColumnType("float");
 
                     b.Property<int>("MatchId")
                         .HasColumnType("int");
@@ -154,14 +154,18 @@ namespace Project_BetHard.Migrations
                     b.Property<double>("Two")
                         .HasColumnType("float");
 
+                    b.Property<double>("X")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("MatchId");
+                    b.HasIndex("MatchId")
+                        .IsUnique();
 
                     b.ToTable("Odds");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Score", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Score", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,7 +196,7 @@ namespace Project_BetHard.Migrations
                     b.ToTable("Scores");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.ScoreTime", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.ScoreTime", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -213,7 +217,7 @@ namespace Project_BetHard.Migrations
                     b.ToTable("ScoreTimes");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Season", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Season", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -235,7 +239,7 @@ namespace Project_BetHard.Migrations
                     b.ToTable("Seasons");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Team", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Team", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -254,7 +258,7 @@ namespace Project_BetHard.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.UpdateHistory", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.UpdateHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -328,7 +332,7 @@ namespace Project_BetHard.Migrations
                     b.ToTable("Wallets");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Bet", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Bet", b =>
                 {
                     b.HasOne("Project_BetHard.Models.User", "User")
                         .WithMany()
@@ -337,29 +341,29 @@ namespace Project_BetHard.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Match", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Match", b =>
                 {
-                    b.HasOne("Project_BetHard.Models.Area", "Area")
+                    b.HasOne("Project_BetHard.Models.Matches.Area", "Area")
                         .WithMany()
                         .HasForeignKey("AreaId");
 
-                    b.HasOne("Project_BetHard.Models.Team", "AwayTeam")
+                    b.HasOne("Project_BetHard.Models.Matches.Team", "AwayTeam")
                         .WithMany()
                         .HasForeignKey("AwayTeamId");
 
-                    b.HasOne("Project_BetHard.Models.Competition", "Competition")
+                    b.HasOne("Project_BetHard.Models.Matches.Competition", "Competition")
                         .WithMany()
                         .HasForeignKey("CompetitionId");
 
-                    b.HasOne("Project_BetHard.Models.Team", "HomeTeam")
+                    b.HasOne("Project_BetHard.Models.Matches.Team", "HomeTeam")
                         .WithMany()
                         .HasForeignKey("HomeTeamId");
 
-                    b.HasOne("Project_BetHard.Models.Score", "Score")
+                    b.HasOne("Project_BetHard.Models.Matches.Score", "Score")
                         .WithMany()
                         .HasForeignKey("ScoreId");
 
-                    b.HasOne("Project_BetHard.Models.Season", "Season")
+                    b.HasOne("Project_BetHard.Models.Matches.Season", "Season")
                         .WithMany()
                         .HasForeignKey("SeasonId");
 
@@ -376,22 +380,22 @@ namespace Project_BetHard.Migrations
                     b.Navigation("Season");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Odds", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Odds", b =>
                 {
-                    b.HasOne("Project_BetHard.Models.Match", null)
+                    b.HasOne("Project_BetHard.Models.Matches.Match", null)
                         .WithOne("Odds")
-                        .HasForeignKey("Project_BetHard.Models.Odds", "Id")
+                        .HasForeignKey("Project_BetHard.Models.Matches.Odds", "MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Score", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Score", b =>
                 {
-                    b.HasOne("Project_BetHard.Models.ScoreTime", "FullTime")
+                    b.HasOne("Project_BetHard.Models.Matches.ScoreTime", "FullTime")
                         .WithMany()
                         .HasForeignKey("FullTimeId");
 
-                    b.HasOne("Project_BetHard.Models.ScoreTime", "HalfTime")
+                    b.HasOne("Project_BetHard.Models.Matches.ScoreTime", "HalfTime")
                         .WithMany()
                         .HasForeignKey("HalfTimeId");
 
@@ -409,7 +413,7 @@ namespace Project_BetHard.Migrations
                     b.Navigation("Wallet");
                 });
 
-            modelBuilder.Entity("Project_BetHard.Models.Match", b =>
+            modelBuilder.Entity("Project_BetHard.Models.Matches.Match", b =>
                 {
                     b.Navigation("Odds");
                 });
