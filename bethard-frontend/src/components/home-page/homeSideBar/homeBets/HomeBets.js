@@ -4,6 +4,7 @@ import API from "../../../../shared/api/services/findBets-service";
 import { UserContext } from "../../../../shared/provider/UserProvider";
 import { Loader } from "../../../loader/Loader";
 import { BetCard } from "./BetCard/BetCard";
+import RemoveBetModal from "../../../removebetmodal/RemoveBetModal";
 
 function HomeBets() {
     //Hämtar Context med hjälp av UserContext. från Userprovider.js, som en referens.
@@ -12,6 +13,10 @@ function HomeBets() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [matchData, setMatchData] = useState();
     const [isError, setIsError] = useState(false);
+
+    const [modalMatch, setModalMatch] = useState();
+    const [modalBet, setModalBet] = useState();
+    const [showModal, setShowModal] = useState(false);
 
     const AllBets = async () => {
         setIsLoaded(false);
@@ -62,6 +67,9 @@ function HomeBets() {
                                     key={index}
                                     bets={bets}
                                     match={match}
+                                    setModalBet={setModalBet}
+                                    setModalMatch={setModalMatch}
+                                    setShowModal={setShowModal}
                                 />
                                 <hr />
                             </>
@@ -85,6 +93,13 @@ function HomeBets() {
     return (
         <div id="bet-box-style">
             <div className="bets-info-box">
+                {showModal && (
+                    <RemoveBetModal
+                        match={modalMatch}
+                        bet={modalBet}
+                        setShowModal={setShowModal}
+                    />
+                )}
                 <h2 id="match-title">Placed bets</h2>
                 {PlacedBets()}
             </div>
