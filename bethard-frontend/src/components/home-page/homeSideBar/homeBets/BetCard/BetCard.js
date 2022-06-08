@@ -1,6 +1,12 @@
 import "./BetCard.css";
 
-export const BetCard = ({ bets, index, match }) => {
+export const BetCard = ({
+    bets,
+    match,
+    setModalMatch,
+    setModalBet,
+    setShowModal,
+}) => {
     const Won = () => {
         if (match.score.winner === null) {
             return "Pending";
@@ -16,8 +22,14 @@ export const BetCard = ({ bets, index, match }) => {
         }
     };
 
+    const handleClick = () => {
+        setModalMatch(match);
+        setModalBet(bets);
+        setShowModal(true);
+    };
+
     return (
-        <div id="betcard-container">
+        <div id="betcard-container" onClick={() => handleClick()}>
             <div className="matchcard-team-header">
                 <img
                     className="matchcard-team-logo"

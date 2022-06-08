@@ -65,10 +65,19 @@ namespace Project_BetHard.Controllers
                 var match = await _context.Matches.Include(m => m.Score).FirstOrDefaultAsync(m => m.Id == b.MatchId);      //get match to check result
                 if (match == null) continue;
 
-                if (match.Status == null) continue;
+                if (match.Status != "FINISHED") continue;
 
                 //Get resultchar for comparison
-                char result = match.Score.Winner == "HOME_TEAM" ? '1' : match.Score.Winner == "DRAW" ? 'X' : '2';
+                char result = 'N';
+                if (match.Score.Winner == "HOME_TEAM") result = '1';
+                if (match.Score.Winner == "DRAW")
+                {
+                    result = 'X';
+                }
+                else
+                {
+                    result = '2';
+                }
 
                 //check if bet is won
                 if (b.BetTeam == result)
@@ -138,7 +147,7 @@ namespace Project_BetHard.Controllers
 
             if (match == null) return NotFound("Match not found.");         //kollar så matchen finns
 
-            if (match.UtcDate < DateTime.UtcNow) return BadRequest("Match has already started. Cannot remove bet.");
+            if (match.UtcDate < DateTime.UtcNow) return BadRequest("Match in play or has ended. Cannot remove bet.");
 
             var user = await _context.Users.Include(u => u.Wallet).FirstAsync(x => x.Username == input.userReturn.Username);   //User sparas i user, där användarei DB stämmer överrens med input-användaren.
 
