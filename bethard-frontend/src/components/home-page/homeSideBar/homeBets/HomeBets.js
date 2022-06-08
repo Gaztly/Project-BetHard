@@ -48,27 +48,21 @@ function HomeBets() {
 
     const PlacedBets = () => {
         return isLoaded ? (
-            <>
-                {bets === undefined ? (
-                    <div>No bets placed</div>
-                ) : (
-                    bets.map((bets, index) => {
-                        const match = matchData?.filter(
-                            (x) => x.id === bets.matchId
-                        )[0];
-                        return (
-                            <>
-                                <BetCard
-                                    key={index}
-                                    bets={bets}
-                                    match={match}
-                                />
-                                <hr />
-                            </>
-                        );
-                    })
-                )}
-            </>
+            bets === undefined ? (
+                <div>No bets placed</div>
+            ) : (
+                bets.map((bets) => {
+                    const match = matchData?.filter(
+                        (x) => x.id === bets.matchId
+                    )[0];
+                    return (
+                        <>
+                            <BetCard key={bets.id} bets={bets} match={match} />
+                            <hr />
+                        </>
+                    );
+                })
+            )
         ) : isError ? (
             <h3>Error loading matches</h3>
         ) : (

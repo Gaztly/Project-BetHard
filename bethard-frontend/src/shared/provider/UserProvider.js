@@ -1,8 +1,8 @@
 import { useState, createContext, useEffect } from "react";
 import LocalStorage from "../storage/LocalStorage";
 
-//UserContext provider 
-const UserContext = createContext(null); 
+//UserContext provider
+const UserContext = createContext(null);
 
 //Fungerar i princip som en static.
 const UserProvider = ({ children }) => {
@@ -13,7 +13,7 @@ const UserProvider = ({ children }) => {
         // en double check så det inte skriver över någon user.
         if (user === null) {
             //LocalStorage från filen, localStorage från webbläsaren
-            if (localStorage.getItem(LocalStorage.user)) { 
+            if (localStorage.getItem(LocalStorage.user)) {
                 setUser(JSON.parse(localStorage.getItem(LocalStorage.user)));
             }
         }
