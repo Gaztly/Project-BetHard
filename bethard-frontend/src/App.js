@@ -8,15 +8,13 @@ import "../src/shared/global/globalstyles.css";
 import { MatchesProvider } from "./shared/provider/MatchesProvider";
 
 function App() {
-  return (
-    <>
-      <UserProvider>
-        <MatchesProvider>
-          <Routes Header={<Header />} Footer={<Footer />} />
-        </MatchesProvider>
-      </UserProvider>
-    </>
-  );
+    return (
+        <>
+            <UserProvider>
+                <Routes Header={<Header />} Footer={<Footer />} />
+            </UserProvider>
+        </>
+    );
 }
 
 export default App;

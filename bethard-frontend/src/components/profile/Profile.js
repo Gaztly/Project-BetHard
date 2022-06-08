@@ -1,18 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import "./Profile.css";
-import { UserContext } from "../../shared/provider/UserProvider";
 import { ProfileDropDown } from "./profiledropdown/ProfileDropDown";
 import "./profiledropdown/ProfileDropDown.css";
 export const Profile = () => {
-  const [user, setUser] = useContext(UserContext);
+    const [showDropDown, setShowDropDown] = useState(false);
+    const profileRef = useRef();
 
-  return (
-    <>
-      <div className="box"></div>
-      <div id="profile">
-        Menu
-        <ProfileDropDown />
-      </div>
-    </>
-  );
+    const handleClick = () => {
+        console.log("click");
+        setShowDropDown(!showDropDown);
+
+        document.addEventListener("click", clickOutside);
+    };
+
+    //Hanterar klick utanför menyn
+    const clickOutside = (e) => {
+        if (!profileRef.current || profileRef.current.contains(e.target))
+            return;
+        setShowDropDown(false);
+        document.removeEventListener("click", clickOutside);
+    };
+
+    return (
+        <div className="page-cover">
+            <div className="box"></div>
+            <div ref={profileRef} id="profile" onClick={() => handleClick()}>
+                Menu
+                <ProfileDropDown show={showDropDown} />
+            </div>
+        </div>
+    );
 };

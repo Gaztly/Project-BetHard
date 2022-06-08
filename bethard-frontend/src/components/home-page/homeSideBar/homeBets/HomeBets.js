@@ -53,6 +53,7 @@ function HomeBets() {
 
     const PlacedBets = () => {
         return isLoaded ? (
+
             <>
                 {bets === undefined ? (
                     <div>No bets placed</div>
@@ -77,6 +78,7 @@ function HomeBets() {
                     })
                 )}
             </>
+
         ) : isError ? (
             <h3>Error loading matches</h3>
         ) : (
